@@ -1,0 +1,52 @@
+Checklist:
+    - list of subtasks with optional heading to separate
+      subtasks into sections
+
+RepeatType:
+    - Can repeat Daily, Weekly, Monthly, Yearly, etc.
+    - Should be able to add new repeat types without breaking
+      Open/Close principle of SOLID.
+
+ToDo: Information Holder
+    title = string
+    description = string
+    dueDate = date
+    repeatType = RepeatType
+    priority = Priority.Medium (default value)
+    notes = string
+    checklist/subtasks = Checklist
+
+PriorityLevel = {
+    Base: 0 -> white
+    Low: 1 -> yellow
+    Medium: 2 -> orange
+    High: 3 -> red-brown
+}
+NOTE: Add ability to add new priority levels?
+
+Project:
+    ToDos = ToDo[]
+    color = string representation of color used in CSS
+    deleteToDo(toDo)
+    createToDo()
+
+- Create default project to hold all ToDo's
+
+App Logic:
+    createToDo()
+    updateToDoComplete(bIsComplete = true)
+    updateToDoPriority(newPriority)
+    reorderToDo(todo, newIndex)
+
+DOM Logic:
+    viewAllProjects()
+    viewAllToDosInProject(project)
+
+Filters:
+    - Today: 
+        - Display all ToDos with dueDateTime of current day
+    - Upcoming: 
+        - Display calendar style slider on top displaying tabs for seven days 
+          with current day in third position. Last two previous days are shown by default.
+        - Can slide the calendar left or right to display tabs for days earlier or later.
+
