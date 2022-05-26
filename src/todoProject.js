@@ -1,27 +1,29 @@
+import ToDo from "./todo.js";
+
 /**
  * Factory function to create single instance of ToDoProject
  * @param  {...ToDo} todos 
  * @returns {Object}
  */
 export default function ToDoProject(name, ...todos) {
-    const _todos = todos || [];
+    const _todos = new Set(todos);
     
     return {
-        addToDo: newToDo => {
-            _todos.push(newToDo);
+        getName: () => name,
+        setName: newName => {
+            name = newName;
+        },
+        addToDo: (...newToDos) => {
+            newToDos.forEach(newToDo => {
+                _todos.add(newToDo);
+            });
         },
         removeToDo: toDoToRemove => {
-            const toDoIndex = _todos.findIndex(toDoToRemove);
-            if (toDoIndex > -1) {
-                return _todos.splice(toDoIndex, 1);
-            }
-            // Like array splice() method, return empty array if ToDo is not found
-            return [];
+            return _todos.delete(toDoToRemove);
         },
-        print: () => {
-            _todos.forEach(todo => {
-                console.log(todo.print());
-            });
+        toString: () => {
+            let str = `ToDoProject: ${name}\nToDos:\n`;
+            return str.concat(Array.from(_todos).map(todo => todo.toString()).join('\n'));
         },
     };
 }

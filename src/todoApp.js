@@ -1,6 +1,6 @@
 import ToDoProject from "./todoProject.js";
 
-export default function ToDoApp() {
+export const ToDoApp = (function() {
     let _todoProjects = [];
 
     return {
@@ -8,10 +8,18 @@ export default function ToDoApp() {
             // Check if type is ToDoProject
             _todoProjects.push(...newProjects);
         },
-        print: () => {
-            _todoProjects.forEach(project => {
-                console.log(project.print());
-            });
-        }, 
+        addToDoToProjectName: (projectName, ...todos) => {
+            const project = getProjectByName(projectName);
+            if (project) {
+                project.addToDo(todos);
+            }
+        },
+        getProjectByName: projectName => {
+            return _todoProjects.find(todoProject => todoProject.getName() === projectName);
+        },
+        toString: () => {
+            let str = 'ToDoProjects:\n';
+            return str.concat(_todoProjects.map(todoProject => todoProject.toString()).join('\n'));
+        },
     };
-}
+})();

@@ -1,14 +1,14 @@
-import Priority from "./priority.js";
+import { Priority, PriorityLevel } from "./priorityLevel.js";
 
 /**
  * Factory function to create single instance of ToDo object.
  * @param {String} title 
  * @param {String} description 
- * @param {Datetime} dueDateTime 
- * @param {Priority} priority 
+ * @param {Date} dueDate 
+ * @param {PriorityLevel} priorityLevel
  * @returns {Object}
  */
-export default function ToDo(title, description, dueDateTime, priority) {
+export default function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0)) {
     return {
         getTitle: () => title,
         setTitle: newTitle => {
@@ -18,18 +18,18 @@ export default function ToDo(title, description, dueDateTime, priority) {
         setDescription: newDescription => {
             description = newDescription;
         },
-        getDueDate: () => dueDateTime,
-        setDueDate: newDueDateTime => {
-            // Check if Datetime type
-            dueDateTime = newDueDateTime;
+        getDueDate: () => dueDate,
+        setDueDate: newDueDate => {
+            // Check if Date type
+            dueDate = newDueDate;
         },
-        getPriority: () => priority,
-        setPriority: newPriority => {
+        getPriorityLevel: () => priorityLevel,
+        setPriorityLevel: newPriorityLevel => {
             // Check if Priority type
-            priority = newPriority;
+            priorityLevel = newPriorityLevel;
         },
-        print: () => {
-            console.log(`Title: ${title} - DueDateTime: ${dueDateTime} - Priority: ${priority}`);
+        toString: () => {
+            return `Title: ${title} - DueDate: ${dueDate} - PriorityLevel: ${priorityLevel.toString()}`;
         },
     };
 }
