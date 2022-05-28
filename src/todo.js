@@ -1,6 +1,6 @@
 import { Priority, PriorityLevel } from "./priorityLevel.js";
 import { Repeat, RepeatType } from "./repeatType.js";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 
 /**
  * Factory function to create single instance of ToDo object.
@@ -30,6 +30,8 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
                 dueDate = newDueDate;
             }
         },
+        getDueDateAsString: () => format(dueDate, "iii MMM d, yyyy"),
+        getDueDateDatetimeAttribute: () => formatISO(dueDate),
         getPriorityLevel: () => priorityLevel,
         setPriorityLevel: newPriorityLevel => {
             // Check if Priority 
