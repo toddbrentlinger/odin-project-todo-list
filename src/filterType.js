@@ -12,13 +12,13 @@ export function FilterType(name, callback) {
 
 export const Filter = (function(){
     let _filterTypes = [
-        FilterType('today', todo => isToday(todo.getDate())),
-        FilterType('tomorrow', todo => isTomorrow(todo.getDate())),
-        FilterType('this week', todo => isThisWeek(todo.getDate())),
+        FilterType('today', todo => isToday(todo.getDueDate())),
+        FilterType('tomorrow', todo => isTomorrow(todo.getDueDate())),
+        FilterType('this week', todo => isThisWeek(todo.getDueDate())),
         FilterType('upcoming', todo => {
             // Include two days before, and two days after, today
             return isThisWeek(
-                todo.getDate(), 
+                todo.getDueDate(), 
                 {weekStartsOn: subDays(Date.now(), 2).getDay()}
             );
         }),

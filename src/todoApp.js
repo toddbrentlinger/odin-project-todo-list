@@ -17,6 +17,12 @@ export const ToDoApp = (function() {
         getProjectByName: projectName => {
             return _todoProjects.find(todoProject => todoProject.getName() === projectName);
         },
+        filterByType: filterTypeStr => {
+            const filteredToDos = _todoProjects.reduce((accum, todoProject) => {
+                return accum.concat(todoProject.filterByType(filterTypeStr));
+            }, []);
+            return filteredToDos.sort((a, b) => a.getDueDate() - b.getDueDate());
+        },
         toString: () => {
             let str = 'ToDoProjects:\n';
             return str.concat(_todoProjects.map(todoProject => todoProject.toString()).join('\n'));

@@ -14,6 +14,7 @@ export default function ToDoProject(name, ...todos) {
         setName: newName => {
             name = newName;
         },
+        getToDos: () => _todos,
         addToDo: (...newToDos) => {
             newToDos.forEach(newToDo => {
                 _todos.add(newToDo);
@@ -29,7 +30,7 @@ export default function ToDoProject(name, ...todos) {
         filterByType: filterTypeStr => {
             const filterType = Filter.getFilterTypeByName(filterTypeStr);
             if (filterType) {
-                return _todos.filter(filterType.callback(todo));
+                return [..._todos].filter(filterType.callback);
             }
         },
     };

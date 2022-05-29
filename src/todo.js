@@ -54,7 +54,7 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
             _isComplete = bIsComplete;
         },
         toString: () => {
-            return `Title: ${title} - DueDate: ${format(dueDate, "iii MMM d, yyyy")} - PriorityLevel: ${priorityLevel.toString()}`;
+            return `Title: ${title} - DueDate: ${format(dueDate, "iii MMM d, yyyy")} - PriorityLevel: ${priorityLevel.toString()} - Repeat: ${repeatType.toString()}`;
         },
     };
 }

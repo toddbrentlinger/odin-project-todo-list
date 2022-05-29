@@ -4,12 +4,14 @@ export function RepeatType(name) {
         setName: newName => {
             name = newName;
         },
+        toString: () => name,
     };
 }
 
 export const Repeat = (function() {
     const _repeatTypes = [
         RepeatType('once'),
+        RepeatType('daily'),
         RepeatType('weekly'),
         RepeatType('monthly'),
         RepeatType('yearly'),
