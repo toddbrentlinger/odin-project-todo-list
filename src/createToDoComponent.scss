@@ -1,0 +1,23 @@
+#create-todo {
+    // Background
+    background-color: hsla(0, 0%, 50%, 0.5);
+    // Position
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    // Grid
+    display: grid;
+    place-items: center;
+
+    #create-todo-form {
+        padding: 2rem;
+        // Background
+        background-color: var(--base-white);
+
+        > * {
+            display: block;
+        }
+    }
+}
