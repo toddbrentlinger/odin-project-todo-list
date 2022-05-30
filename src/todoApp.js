@@ -4,6 +4,7 @@ export const ToDoApp = (function() {
     let _todoProjects = [];
 
     return {
+        getAllProjects: () => _todoProjects,
         addProject: (...newProjects) => {
             // Check if type is ToDoProject
             _todoProjects.push(...newProjects);

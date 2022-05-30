@@ -33,9 +33,12 @@ body {
         "main main"
         "footer footer";
 
+    > * {
+        padding: 1.6rem;
+    }
+
     header {
         outline: 2px solid red;
-        padding: 1.6rem;
         // Grid
         grid-area: header;
         
@@ -71,11 +74,14 @@ body {
         outline: 2px solid blue;
         // Grid
         grid-area: main;
+
+        h3 {
+            text-transform: capitalize;
+        }
     }
 
     footer {
         outline: 2px solid orange;
-        padding: 1.6rem;
         font-size: 1.2rem;
         text-align: center;
         // Grid

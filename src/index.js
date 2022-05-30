@@ -8,6 +8,8 @@ import { addDays, subDays } from 'date-fns';
 import ToDoProjectComponent from './todoProjectComponent.js';
 import CreateToDoComponent from './createToDoComponent.js';
 
+import ToDoAppComponent from './todoAppComponent.js';
+
 import './meyer-reset.scss';
 import './style.scss';
 
@@ -41,6 +43,7 @@ import './style.scss';
         )
     );
 
-    document.querySelector('main').replaceWith(ToDoProjectComponent(ToDoApp.getProjectByName('default')).render());
+    //document.querySelector('main').replaceWith(ToDoProjectComponent(ToDoApp.getProjectByName('default')).render());
+    document.getElementById('content').replaceWith(ToDoAppComponent().render());
 
 })();

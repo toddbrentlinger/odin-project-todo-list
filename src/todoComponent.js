@@ -1,5 +1,6 @@
 import ToDo from "./todo.js";
 import { createElement } from "./utilities.js";
+import './todoComponent.scss';
 
 export default function ToDoComponent(todo) {
     return {

@@ -1,0 +1,28 @@
+#sidenav {
+    text-transform: capitalize;
+    // Flex
+    display: flex;
+    flex-direction: column;
+    //gap: 1.6rem;
+
+    hr {
+        width: 100%;
+    }
+
+    ul {
+        li {
+            cursor: pointer;
+        }
+    }
+
+    #filter-type {
+        li {
+
+        }
+    }
+    #projects-container {
+        h3 {
+            margin-bottom: 0.5em;
+        }
+    }
+}

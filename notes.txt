@@ -50,3 +50,7 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
+5-28-22
+
+- Inside form to create new ToDo for the 'Project' field, if 'Add New Project' is selected,
+open new field below to get new project name.

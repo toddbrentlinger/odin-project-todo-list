@@ -11,13 +11,13 @@
     display: grid;
     place-items: center;
 
+    label, span {
+        display: block;
+    }
+
     #create-todo-form {
         padding: 2rem;
         // Background
         background-color: var(--base-white);
-
-        > * {
-            display: block;
-        }
     }
 }
