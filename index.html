@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="content">
+        <!--
         <header>
             <nav id="topnav">
                 <span id="topnav-logo">Logo</span>
@@ -49,18 +50,28 @@
         <div id="create-todo">
             <form action="" method="post" id="create-todo-form">
                 <h2>Create New ToDo</h2>
-                <label for="create-todo-title">
-                    <span>Title</span>
-                    <input type="text" minlength="1" maxlength="50" id="create-todo-title" name="title" required>
-                </label>
-                <label for="create-todo-description">
-                    <span>Description</span>
-                    <input type="text" maxlength="200" id="create-todo-description" name="description">
-                </label>
-                <label for="create-todo-date">
-                    <span>Due Date</span>
-                    <input type="datetime-local" id="create-todo-date" name="date" required>
-                </label>
+
+                <div id="create-todo-title">
+                    <label for="todo-title-input">
+                        <span>Title</span>
+                        <input type="text" minlength="1" maxlength="50" id="todo-title-input" name="title" required>
+                    </label>
+                </div>
+
+                <div id="create-todo-description">
+                    <label for="todo-description-input">
+                        <span>Description</span>
+                        <input type="text" maxlength="200" id="todo-description-input" name="description">
+                    </label>
+                </div>
+
+                <div id="create-todo-date">
+                    <label for="todo-date-input">
+                        <span>Due Date</span>
+                        <input type="datetime-local" id="todo-date-input" name="date" required>
+                    </label>
+                </div>
+
                 <div id="create-todo-repeat">
                     <label for="todo-repeat-select">Repeat:</label>
                     <select name="repeat" id="todo-repeat-select" required>
@@ -71,8 +82,9 @@
                         <option value="4">Yearly</option>
                     </select>
                 </div>
+
                 <div id="create-todo-priority">
-                    <label for="todo-priority-select">Repeat:</label>
+                    <label for="todo-priority-select">Priority:</label>
                     <select name="priority" id="todo-priority-select" required>
                         <option value="0" selected>White</option>
                         <option value="1">Yellow</option>
@@ -80,12 +92,31 @@
                         <option value="3">Red</option>
                     </select>
                 </div>
+
+                <div id="create-todo-project">
+                    <label for="todo-project-select">Project:</label>
+                    <select name="project" id="todo-project-select" required>
+                        <option value="default" selected>Default</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="create-new-project">+ Add New Project</option>
+                    </select>
+                </div>
+
+                <div id="create-todo-project-add-new">
+                    <label for="todo-project-add-new-input">
+                        <span>New Project Title</span>
+                        <input type="text" id="todo-project-add-new-input" name="project-new-title" minlength="50" disabled>
+                    </label>
+                </div>
+
                 <div id="create-todo-btns">
                     <button type="reset">Reset</button>
                     <button type="submit">Update</button>
                 </div>
             </form>
         </div>
+        -->
     </div>
 
     <script src="bundle.js"></script>
