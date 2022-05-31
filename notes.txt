@@ -50,6 +50,24 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
+5-30-22
+
+- Use same createToDoComponent when adding a ToDo from Project page AND editing existing ToDo
+by passing in object with different key/values to change certain values or methods inside 
+componnent.
+    - Quick ToDo
+        - Default form values
+        - 'Add' text to submit button
+    - Add ToDo To Project
+        - Default form values except project selection
+        - 'Add' text to submit button
+    - Edit ToDo
+        - Existing values of ToDo
+        - 'Update' text to submit button
+
+- Create optgroup for CreateToDo form to hold 'project' and optional 'new-project-name'
+that is hidden when disabled and slides into view when enabled.
+
 5-28-22
 
 - Inside form to create new ToDo for the 'Project' field, if 'Add New Project' is selected,

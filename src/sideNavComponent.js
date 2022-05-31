@@ -3,16 +3,25 @@ import { ToDoApp } from "./todoApp.js";
 import { createElement } from "./utilities.js";
 
 import './sideNavComponent.scss';
+import FilterTypeComponent from "./filterTypeComponent.js";
+import ToDoProjectComponent from "./todoProjectComponent.js";
 
 export default function SideNavComponent() {
     const _createFilterTypeList = () => {
         const filterTypeListElement = createElement('ul', {id: 'filter-type'});
 
         Filter.getAllFilterTypes().forEach(filterType => {
+            const linkElement = createElement('a', {href: ''}, 
+                createElement('span', {}, filterType.getName())
+            );
+
+            linkElement.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector('main').replaceWith(FilterTypeComponent(filterType).render());
+            }, false);
+
             filterTypeListElement.appendChild(
-                createElement('li', {}, 
-                    createElement('a', {href: ''}, filterType.getName())
-                )
+                createElement('li', {}, linkElement)
             );
         });
 
@@ -23,10 +32,17 @@ export default function SideNavComponent() {
         const projectsListElement = createElement('ul', {id: 'projects'});
 
         ToDoApp.getAllProjects().forEach(project => {
+            const linkElement = createElement('a', {href: ''}, 
+                createElement('span', {}, project.getName())
+            );
+
+            linkElement.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector('main').replaceWith(ToDoProjectComponent(project).render());
+            }, false);
+
             projectsListElement.appendChild(
-                createElement('li', {}, 
-                    createElement('a', {href: ''}, project.getName())
-                )
+                createElement('li', {}, linkElement)
             );
         });
 
