@@ -11,13 +11,82 @@
     display: grid;
     place-items: center;
 
-    label, span {
-        display: block;
-    }
-
-    #create-todo-form {
+    #create-todo-form-container {
         padding: 2rem;
         // Background
         background-color: var(--base-white);
+
+        #create-todo-form-header {
+            // Grid
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+
+            h2 {
+                text-align: center;
+            }
+            #create-todo-close {
+                --bar-thickness: 10%;
+                --bar-width: 60%;
+
+                border: 2px solid var(--base-black);
+                border-radius: 50%;
+                cursor: pointer;
+                width: 1.7em;
+                height: 1.7em;
+                // Position
+                position: relative;
+                
+                &:hover, &:focus {
+                    background-color: var(--base-black);
+                    
+                    &::before, &::after {
+                        background-color: var(--base-white);
+                    }
+                }
+    
+                &::before, &::after {
+                    content: "";
+                    position: absolute;
+                    top: calc(50% - 0.5 * var(--bar-thickness));
+                    left: calc(50% - 0.5 * var(--bar-width));
+                    height: var(--bar-thickness);
+                    width: var(--bar-width);
+                    background-color: var(--base-black);
+                    // Transform
+                    transform-origin: center;
+                }
+    
+                &::before {
+                    // Transform
+                    transform: rotate(45deg);
+                }
+    
+                &::after {
+                    // Transform
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+        #create-todo-form {
+            label, span {
+                display: block;
+            }
+
+            select {
+                text-transform: capitalize;
+            }
+
+            input:disabled {
+                //display: none;
+            }
+
+            #create-todo-btns {
+                // Grid
+                display: grid;
+                grid-auto-flow: column;
+            }
+        }
     }
 }

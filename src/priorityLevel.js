@@ -23,6 +23,7 @@ export const Priority = (function() {
     ];
 
     return {
+        getAllPriorityLevels: () => _priorityLevelArr,
         addPriorityLevel: newPriorityLevel => {
             // Check newPriorityLevel type 
             // Check if newPriorityLevel value has duplicate value OR color
