@@ -54,7 +54,7 @@
                     }
                 }
 
-                &:hover, &:focus, &:active {
+                &:hover, &:focus, &:active, &.active {
                     transform: scale(1);
                     span {
                         &::before {

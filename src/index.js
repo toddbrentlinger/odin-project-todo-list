@@ -44,6 +44,7 @@ import './style.scss';
     );
 
     //document.querySelector('main').replaceWith(ToDoProjectComponent(ToDoApp.getProjectByName('default')).render());
-    document.getElementById('content').replaceWith(ToDoAppComponent().render());
+    //document.getElementById('content').replaceWith(ToDoAppComponent().render());
+    ToDoAppComponent(document.getElementById('content')).render();
 
 })();

@@ -7,33 +7,18 @@ import { createElement } from "./utilities.js";
 import './createToDoComponent.scss';
 import { parseISO } from "date-fns";
 
-export default function CreateToDoComponent() {
-    const _createNewProjectSelectValue = 'create-new-project';
+/**
+ * 
+ * @param {Object} props 
+ * @returns {Object}
+ */
+export default function CreateToDoComponent(props) {
+    //const _createNewProjectSelectValue = 'create-new-project';
     let _createToDoElement = null;
     let _createNewProjectInputElement = null;
 
     const _handleFormSubmit = e => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-
-        // Create ToDo instance
-        const todo = ToDo(
-            formProps.title, 
-            formProps.description,
-            parseISO(formProps.date),
-            Priority.getPriorityLevelByValue(+formProps.priority),
-            Repeat.getRepeatTypeByName(formProps.repeat)
-        );
-
-        // Get or create new project
-        if (formProps.project === _createNewProjectSelectValue && 
-            formProps['project-new-title'].length > 0
-        ) {
-            ToDoApp.addProject(ToDoProject(formProps.project, todo));
-        } else {
-            ToDoApp.getProjectByName(formProps.project).addToDo(todo);
-        }
+        props.handleQuickAddToDoSubmit(e);
 
         // Remove create ToDo element from DOM
         _createToDoElement.remove();
@@ -76,7 +61,7 @@ export default function CreateToDoComponent() {
         if (!_createNewProjectInputElement)
             return;
 
-        if (e.target.value === _createNewProjectSelectValue) {
+        if (e.target.value === props.createNewProjectSelectValue) {
             _createNewProjectInputElement.removeAttribute('disabled');
             _createNewProjectInputElement.focus();
         } else {
@@ -93,7 +78,7 @@ export default function CreateToDoComponent() {
             return option;
         });
 
-        const addNewProjectOption = createElement('option', {value: _createNewProjectSelectValue}, '+ Add New Project');
+        const addNewProjectOption = createElement('option', {value: props.createNewProjectSelectValue}, '+ Add New Project');
 
         projectOptions.push(addNewProjectOption);
 
