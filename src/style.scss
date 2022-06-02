@@ -24,6 +24,8 @@ body {
 
 #content {
     min-height: 100vh;
+    max-width: 1000px;
+    margin: 0 auto;
     // Grid
     display: grid;
     grid-template-columns: auto 1fr;
@@ -74,6 +76,9 @@ body {
         outline: 2px solid blue;
         // Grid
         grid-area: main;
+        display: grid;
+        row-gap: 1rem;
+        grid-auto-rows: min-content;
 
         h3 {
             text-transform: capitalize;
@@ -89,6 +94,12 @@ body {
         display: grid;
         place-items: center;
     }
+}
+
+.todo-item-list {
+    // Grid
+    display: grid;
+    row-gap: 1.6rem;
 }
 
 /* Extra small devices (phones, 600px and down) */

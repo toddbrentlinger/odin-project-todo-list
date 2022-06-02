@@ -8,12 +8,19 @@ export default function ToDoComponent(todo) {
         render: () => {
             const todoElement = createElement('div', {'class': 'todo-item'});
 
+            // Checkbox
+            todoElement.appendChild(
+                createElement('div', {'class': 'todo-checkbox-container'}, 
+                    createElement('div', {'class': 'todo-checkbox'})
+                )
+            );
+
             const title = todoElement.appendChild(
                 createElement('h2', {'class': 'todo-title'}, todo.getTitle())
             );
-            const description = todoElement.appendChild(
-                createElement('p', {'class': 'todo-description'}, todo.getDescription())
-            );
+            // const description = todoElement.appendChild(
+            //     createElement('p', {'class': 'todo-description'}, todo.getDescription())
+            // );
             const datetime = todoElement.appendChild(
                 createElement(
                     'time', 

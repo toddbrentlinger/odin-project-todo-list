@@ -50,6 +50,10 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
+6/1/22
+
+- Combine functionality of FilterTypeComponent and ToDoProjectComponent?
+
 5-30-22
 
 - Use same createToDoComponent when adding a ToDo from Project page AND editing existing ToDo
