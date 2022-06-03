@@ -5,7 +5,6 @@ import { Repeat } from "./repeatType.js";
 import { Priority } from "./priorityLevel.js";
 import { createElement } from "./utilities.js";
 import './createToDoComponent.scss';
-import { parseISO } from "date-fns";
 
 /**
  * 
@@ -15,6 +14,7 @@ import { parseISO } from "date-fns";
 export default function CreateToDoComponent(props) {
     //const _createNewProjectSelectValue = 'create-new-project';
     let _createToDoElement = null;
+    let _createNewProjectContainerElement = null;
     let _createNewProjectInputElement = null;
 
     const _handleFormSubmit = e => {
@@ -57,14 +57,16 @@ export default function CreateToDoComponent(props) {
      * @param {Event} e
      */
     const _handleProjectSelect = e => {
-        // Return if no 'create new prjoject' input element
-        if (!_createNewProjectInputElement)
+        // Return if no 'create new prjoject' input element or container
+        if (!_createNewProjectInputElement || !_createNewProjectContainerElement)
             return;
 
         if (e.target.value === props.createNewProjectSelectValue) {
+            _createNewProjectContainerElement.classList.remove('hide');
             _createNewProjectInputElement.removeAttribute('disabled');
             _createNewProjectInputElement.focus();
         } else {
+            _createNewProjectContainerElement.classList.add('hide');
             _createNewProjectInputElement.setAttribute('disabled', true);
         }
     };
@@ -89,6 +91,7 @@ export default function CreateToDoComponent(props) {
         render: () => {
             _createToDoElement = createElement('div', {id: 'create-todo'});
 
+            // Event listener to close modal when background is clicked
             _createToDoElement.addEventListener('click', _close, false);
 
             const createToDoFormContainer = _createToDoElement.appendChild(
@@ -185,6 +188,8 @@ export default function CreateToDoComponent(props) {
                 {name: 'project', id: 'todo-project-select', required: true}, 
                 ..._createProjectOptions()
             );
+
+            // Event listener when project select is changed
             createTodoProjectSelect.addEventListener('change', _handleProjectSelect, false);
 
             // Create element including select element just created with event listener
@@ -201,12 +206,12 @@ export default function CreateToDoComponent(props) {
                 type: 'text', 
                 id: 'todo-project-add-new-input', 
                 name: 'project-new-title', 
-                minlength: 50, 
-                disabled: true
+                maxlength: 50,
+                disabled: true,
             });
 
-            createToDoForm.appendChild(
-                createElement('div', {id: 'create-todo-project-add-new'}, 
+            _createNewProjectContainerElement = createToDoForm.appendChild(
+                createElement('div', {id: 'create-todo-project-add-new', 'class': 'hide'}, 
                     createElement('label', {'for': 'todo-project-add-new-input'}, 
                         createElement('span', {}, 'New Project Title:'),
                         _createNewProjectInputElement
