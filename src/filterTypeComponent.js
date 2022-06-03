@@ -32,9 +32,9 @@ export default function FilterTypeComponent(filterType = Filter.getFilterTypeByN
                 const todoElementContainer = todoListElement.appendChild(
                     createElement('div', {'class': 'todo-item-container'})
                 );
-                
+
                 const todoElement = ToDoComponent(todo).render();
-                todoElement.style.animationDelay = `${index * 200}ms`;
+                todoElement.style.animationDelay = `${index * 150}ms`;
                 todoElementContainer.appendChild(todoElement);
             });
 

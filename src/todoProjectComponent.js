@@ -26,7 +26,7 @@ export default function ToDoProjectComponent(todoProject) {
                 );
                 
                 const todoElement = ToDoComponent(todo).render();
-                todoElement.style.animationDelay = `${index * 200}ms`;
+                todoElement.style.animationDelay = `${index * 150}ms`;
                 todoElementContainer.appendChild(todoElement);
             });
 

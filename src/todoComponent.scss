@@ -21,8 +21,8 @@
     left: 0;
     // Animation
     animation-name: slide-up;
-    animation-duration: 1s;
-    animation-timing-function: ease;
+    animation-duration: 500ms;
+    animation-timing-function: ease-out;
     animation-fill-mode: both;
 
     @keyframes slide-up {
@@ -38,11 +38,12 @@
 
     .todo-checkbox-container {
         outline: 2px solid blue;
-        padding: 1em;
         // Grid
         grid-area: checkbox;
         display: grid;
         place-items: center;
+        height: 100%;
+        aspect-ratio: 1;
 
         .todo-checkbox {
             content: "";
