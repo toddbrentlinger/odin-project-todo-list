@@ -12,6 +12,9 @@ import ToDoProjectComponent from "./todoProjectComponent.js";
  * @returns {Object}
  */
 export default function SideNavComponent(props) {
+    let _activeNavLinkKey = 'filter-today';
+    let _sideNavElement = null;
+
     const _removeActiveClassFromNavLinks = () => {
         document.querySelectorAll('#sidenav a')
             .forEach(navLink => navLink.classList.remove('active'));
@@ -25,15 +28,13 @@ export default function SideNavComponent(props) {
                 createElement('span', {}, filterType.getName())
             );
 
-            // Add active class to default selected nav link 'Today'
-            if (filterType.getName() === 'today') {
-                linkElement.classList.add('active');
-            }
+            linkElement.dataset.key = `filter-${filterType.getName()}`;
 
             linkElement.addEventListener('click', e => {
                 e.preventDefault();
                 _removeActiveClassFromNavLinks();
                 e.currentTarget.classList.add('active');
+                _activeNavLinkKey = e.currentTarget.dataset.key;
                 props.handleSideNavLinkClick(FilterTypeComponent(filterType));
             }, false);
 
@@ -53,10 +54,13 @@ export default function SideNavComponent(props) {
                 createElement('span', {}, project.getName())
             );
 
+            linkElement.dataset.key = `project-${project.getName()}`;
+
             linkElement.addEventListener('click', e => {
                 e.preventDefault();
                 _removeActiveClassFromNavLinks();
                 e.currentTarget.classList.add('active');
+                _activeNavLinkKey = e.currentTarget.dataset.key;
                 props.handleSideNavLinkClick(ToDoProjectComponent(project));
             }, false);
 
@@ -70,26 +74,32 @@ export default function SideNavComponent(props) {
 
     return {
         render: () => {
-            const sideNavComponent = createElement('nav', {id: 'sidenav'});
+            _sideNavElement = createElement('nav', {id: 'sidenav'});
 
             // Filter Types
-            sideNavComponent.appendChild(
+            _sideNavElement.appendChild(
                 createElement('div', {id: 'filter-type-container'}, 
                     _createFilterTypeList()
                 )
             );
 
-            sideNavComponent.appendChild(document.createElement('hr'));
+            _sideNavElement.appendChild(document.createElement('hr'));
 
             // Projects
-            sideNavComponent.appendChild(
+            _sideNavElement.appendChild(
                 createElement('div', {id: 'projects-container'},
                     createElement('h3', {}, 'Projects'),
                     _createProjectsList()
                 )
             );
 
-            return sideNavComponent;
+            // Add class to active nav link
+            const activeNavLink = _sideNavElement.querySelector(`[data-key=${_activeNavLinkKey}`);
+            if (activeNavLink) {
+                activeNavLink.classList.add('active');
+            }
+
+            return _sideNavElement;
         },
     };
 }

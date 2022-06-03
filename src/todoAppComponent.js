@@ -6,14 +6,10 @@ import ToDo from "./todo.js";
 import { Priority } from "./priorityLevel.js";
 import { Repeat } from "./repeatType.js";
 
-import ToDoProjectComponent from "./todoProjectComponent.js";
 import FilterTypeComponent from "./filterTypeComponent.js";
-import CreateToDoComponent from "./createToDoComponent.js";
 
 import { ToDoApp } from "./todoApp.js";
-import { createElement } from "./utilities.js";
 import { parseISO } from "date-fns";
-import { FilterType } from "./filterType.js";
 
 /**
  * 
@@ -24,7 +20,12 @@ export default function ToDoAppComponent(contentElement) {
     const _createNewProjectSelectValue = 'create-new-project';
 
     const _refreshSideNavComponent = () => {
-        
+        const newSideNavElement = _sideNavcomponent.render();
+
+        // Refresh main element to display new component
+        _sideNavElement.replaceWith(newSideNavElement);
+
+        _sideNavElement = newSideNavElement;
     };
 
     const _refreshMainComponent = () => {
@@ -55,7 +56,7 @@ export default function ToDoAppComponent(contentElement) {
         if (formProps.project === _createNewProjectSelectValue && 
             formProps['project-new-title'].length > 0
         ) {
-            ToDoApp.addProject(ToDoProject(formProps.project, todo));
+            ToDoApp.addProject(ToDoProject(formProps['project-new-title'], todo));
             _refreshSideNavComponent();
         } else {
             ToDoApp.getProjectByName(formProps.project).addToDo(todo);
@@ -71,6 +72,7 @@ export default function ToDoAppComponent(contentElement) {
 
     let _mainElement = null;
     let _mainComponent = FilterTypeComponent(); // Default show ToDo's with due date of current date
+    let _sideNavElement = null;
     let _sideNavcomponent = SideNavComponent({
         handleSideNavLinkClick: _handleSideNavLinkClick,
     });
@@ -89,7 +91,7 @@ export default function ToDoAppComponent(contentElement) {
             }).render());
 
             // Sidenav
-            contentElement.appendChild(_sideNavcomponent.render());
+            _sideNavElement = contentElement.appendChild(_sideNavcomponent.render());
 
             // Main
             _mainElement = contentElement.appendChild(_mainComponent.render());
