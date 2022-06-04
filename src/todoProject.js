@@ -1,5 +1,37 @@
 import ToDo from "./todo.js";
 import { Filter } from "./filterType.js";
+import {v4 as uuidv4} from 'uuid';
+
+export function ToDoProjectItem(name, id = uuidv4()) {
+    return {
+        getId: () => id,
+        getName: () => name,
+        setName: newName => {
+            name = newName;
+        },
+        toJSON: () => {
+            return {
+                id,
+                name,
+            };
+        },
+    };
+}
+
+export const ToDoProjectNew = (function() {
+    const _projects = [
+        ToDoProjectItem('default'),
+    ];
+
+    return {
+        getProjectByName: projectName => {
+            return _projects.find(project => project.getName() === projectName);
+        },
+        getProjectById: projectId => {
+            return _projects.find(project => project.getId() === projectId);
+        },
+    };
+}());
 
 /**
  * Factory function to create single instance of ToDoProject
@@ -26,6 +58,12 @@ export default function ToDoProject(name, ...todos) {
         toString: () => {
             let str = `ToDoProject: ${name}\nToDos:\n`;
             return str.concat(Array.from(_todos).map(todo => todo.toString()).join('\n'));
+        },
+        toJSON: () => {
+            return {
+                name,
+                todos: [...todos].map(todo => todo.toJSON()),
+            };
         },
         filterByType: filterTypeStr => {
             const filterType = Filter.getFilterTypeByName(filterTypeStr);
