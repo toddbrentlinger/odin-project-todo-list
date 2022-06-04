@@ -1,20 +1,24 @@
 import { Priority, PriorityLevel } from "./priorityLevel.js";
 import { Repeat, RepeatType } from "./repeatType.js";
 import { format, formatISO } from "date-fns";
+import { ToDoProjectNew } from "./todoProject.js";
+import {v4 as uuidv4} from 'uuid';
 
 /**
  * Factory function to create single instance of ToDo object.
  * @param {String} title 
  * @param {String} description 
- * @param {Date} dueDate 
+ * @param {Date} dueDate
  * @param {PriorityLevel} priorityLevel
  * @param {RepeatType} repeatType
+ * @param {ToDoProjectNew} project
  * @returns {Object}
  */
-export default function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once')) {
+export default function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProjectNew.getProjectByName('default'), id = uuidv4()) {
     let _isComplete = false;
 
     return {
+        getId: () => id,
         getTitle: () => title,
         setTitle: newTitle => {
             title = newTitle;
@@ -55,6 +59,17 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
         },
         toString: () => {
             return `Title: ${title} - DueDate: ${format(dueDate, "iii MMM d, yyyy")} - PriorityLevel: ${priorityLevel.toString()} - Repeat: ${repeatType.toString()}`;
+        },
+        toJSON: () => {
+            return {
+                id,
+                title,
+                description,
+                dueDate: dueDate.toJSON(),
+                priority: priorityLevel.toJSON(),
+                repeat: repeatType.toJSON(),
+                project: project.getid(),
+            };
         },
     };
 }

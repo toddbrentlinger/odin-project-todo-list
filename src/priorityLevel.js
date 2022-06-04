@@ -10,6 +10,12 @@ export function PriorityLevel(value, color) {
             color = newColor;
         },
         toString: () => `Value: ${value} - Color: ${color}`,
+        toJSON: () => {
+            return {
+                value,
+                color,
+            };
+        },
     };
 }
 
@@ -26,18 +32,25 @@ export const Priority = (function() {
         getAllPriorityLevels: () => _priorityLevelArr,
         addPriorityLevel: newPriorityLevel => {
             // Check newPriorityLevel type 
+            if (!(newPriorityLevel instanceof PriorityLevel)) {
+                return;
+            }
+
             // Check if newPriorityLevel value has duplicate value OR color
             _priorityLevelArr.forEach(priorityLevel => {
                 // Value
                 if (priorityLevel.getValue() === newPriorityLevel.getValue()) {
                     // Throw error about duplicate value
+                    return;
                 }
                 // Color
                 if (priorityLevel.getColor() === newPriorityLevel.getColor()) {
                     // Throw error about duplicate color
+                    return;
                 }
             });
             _priorityLevelArr.push(newPriorityLevel);
+            return newPriorityLevel;
         },
         removePriorityLevel: priorityLevelToRemove => {
             const index = _priorityLevelArr.findIndex(priorityLevel => priorityLevel === priorityLevelToRemove);

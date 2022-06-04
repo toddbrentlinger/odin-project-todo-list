@@ -5,6 +5,7 @@ export function RepeatType(name) {
             name = newName;
         },
         toString: () => name,
+        toJSON: () => name,
     };
 }
 
@@ -21,7 +22,9 @@ export const Repeat = (function() {
         addRepeatType: newRepeatType => {
             if (newRepeatType instanceof RepeatType) {
                 _repeatTypes.push(newRepeatType);
+                return newRepeatType;
             }
+            // Throw error about wrong object type
         },
         getRepeatTypeByName: name => {
             return _repeatTypes.find(repeatType => repeatType.getName() === name);
