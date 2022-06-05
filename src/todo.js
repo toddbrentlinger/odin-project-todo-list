@@ -2,6 +2,7 @@ import { Priority, PriorityLevel } from "./priorityLevel.js";
 import { Repeat, RepeatType } from "./repeatType.js";
 import { format, formatISO } from "date-fns";
 import { ToDoProjectNew } from "./todoProject.js";
+import ToDoLocalStorage from "./todoLocalStorage.js";
 import {v4 as uuidv4} from 'uuid';
 
 /**
@@ -17,7 +18,7 @@ import {v4 as uuidv4} from 'uuid';
 export default function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProjectNew.getProjectByName('default'), id = uuidv4()) {
     let _isComplete = false;
 
-    return {
+    const obj = {
         getId: () => id,
         getTitle: () => title,
         setTitle: newTitle => {
@@ -68,8 +69,13 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
                 dueDate: dueDate.toJSON(),
                 priority: priorityLevel.toJSON(),
                 repeat: repeatType.toJSON(),
-                project: project.getid(),
+                project: project.getName(),
             };
         },
     };
+
+    // Save ToDo instance to localStorage
+    ToDoLocalStorage.saveToDo(obj);
+
+    return obj;
 }

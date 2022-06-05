@@ -4,6 +4,7 @@ import ToDo from './todo.js';
 import { Priority } from './priorityLevel.js';
 import { Repeat } from './repeatType.js';
 import { addDays, subDays } from 'date-fns';
+import ToDoLocalStorage from './todoLocalStorage.js';
 
 import ToDoProjectComponent from './todoProjectComponent.js';
 import CreateToDoComponent from './createToDoComponent.js';
@@ -19,9 +20,11 @@ import './style.scss';
     window.ToDoProject = ToDoProject;
     window.ToDo = ToDo;
     window.Priority = Priority;
-
+    window.ToDoLocalStorage = ToDoLocalStorage;
     window.ToDoProjectComponent = ToDoProjectComponent;
 
+    ToDoApp.init();
+    
     ToDoApp.addProject(
         ToDoProject('default', 
             ToDo('Default-weekly-3', 'description', subDays(Date.now(), 2), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('weekly')),
@@ -44,7 +47,7 @@ import './style.scss';
             ToDo('Work-monthly-3', 'work-description3', addDays(Date.now(), 3), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('monthly'), ToDoProjectNew.getProjectByName('work'))
         )
     );
-    
+
     ToDoAppComponent(document.getElementById('content')).render();
 
 })();

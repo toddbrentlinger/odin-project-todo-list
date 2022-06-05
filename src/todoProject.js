@@ -24,6 +24,11 @@ export const ToDoProjectNew = (function() {
     ];
 
     return {
+        addProject: todoProjectItem => {
+            // Check if project name already exists
+
+            _projects.push(todoProjectItem);
+        },
         getProjectByName: projectName => {
             return _projects.find(project => project.getName() === projectName);
         },
