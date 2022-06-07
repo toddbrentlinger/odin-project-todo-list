@@ -17,9 +17,9 @@ export const ToDoApp = (function() {
         const repeat = Repeat.getRepeatTypeByName(jsonObj.repeat) 
             || Repeat.addRepeatType(RepeatType(jsonObj.repeat))
             || undefined;
-
-        const project = ToDoProjectNew.getProjectById(jsonObj.priority.id) 
-            || ToDoProjectNew.addProject(ToDoProjectItem(jsonObj.priority.name), jsonObj.priority.id) 
+        
+        const project = ToDoProjectNew.getProjectByName(jsonObj.project)
+            || ToDoProjectNew.addProjectName(jsonObj.project) 
             || undefined;
             
         return ToDo(
@@ -28,7 +28,7 @@ export const ToDoApp = (function() {
             new Date(jsonObj.dueDate),
             priority,
             repeat,
-            jsonObj.project,
+            project,
             jsonObj.id
         );
     };
@@ -45,6 +45,9 @@ export const ToDoApp = (function() {
         getAllToDos: () => {
             return _todos;
         },
+        getAllProjects: () => {
+            return ToDoProjectNew.getAllProjects();
+        },
         addProject: (...newProjects) => {
             // Check if type is ToDoProject
             _todoProjects.push(...newProjects);
@@ -55,7 +58,7 @@ export const ToDoApp = (function() {
                 project.addToDo(todos);
             }
         },
-        getAllProjects: () => _todoProjects,
+        //getAllProjects: () => _todoProjects,
         getProjectByName: projectName => {
             return _todoProjects.find(todoProject => todoProject.getName() === projectName);
         },
@@ -70,29 +73,6 @@ export const ToDoApp = (function() {
         // },
         // saveProjectsToLocalStorage: () => {
 
-        // },
-        // createToDoFromJSON: jsonObj => {
-        //     const priority = Priority.getPriorityLevelByValue(+jsonObj.priority.value) 
-        //         || Priority.addPriorityLevel(PriorityLevel(+jsonObj.priority.value, jsonObj.priority.color))
-        //         || undefined;
-
-        //     const repeat = Repeat.getRepeatTypeByName(jsonObj.repeat) 
-        //         || Repeat.addRepeatType(RepeatType(jsonObj.repeat))
-        //         || undefined;
-
-        //     const project = ToDoProjectNew.getProjectById(jsonObj.priority.id) 
-        //         || ToDoProjectNew.addProject(ToDoProjectItem(jsonObj.priority.name), jsonObj.priority.id) 
-        //         || undefined;
-                
-        //     return ToDo(
-        //         jsonObj.title,
-        //         jsonObj.description,
-        //         new Date(jsonObj.dueDate),
-        //         priority,
-        //         repeat,
-        //         jsonObj.project,
-        //         jsonObj.id
-        //     );
         // },
         toString: () => {
             let str = 'ToDoProjects:\n';

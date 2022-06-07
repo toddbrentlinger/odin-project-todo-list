@@ -1,7 +1,7 @@
 import { Priority, PriorityLevel } from "./priorityLevel.js";
 import { Repeat, RepeatType } from "./repeatType.js";
 import { format, formatISO } from "date-fns";
-import { ToDoProjectNew } from "./todoProject.js";
+import { ToDoProjectItem, ToDoProjectNew } from "./todoProject.js";
 import ToDoLocalStorage from "./todoLocalStorage.js";
 import {v4 as uuidv4} from 'uuid';
 
@@ -12,7 +12,7 @@ import {v4 as uuidv4} from 'uuid';
  * @param {Date} dueDate
  * @param {PriorityLevel} priorityLevel
  * @param {RepeatType} repeatType
- * @param {ToDoProjectNew} project
+ * @param {ToDoProjectItem} project
  * @returns {Object}
  */
 export default function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProjectNew.getProjectByName('default'), id = uuidv4()) {
@@ -48,6 +48,12 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
         setRepeatType: newRepeatType => {
             if (newRepeatType instanceof RepeatType) {
                 repeatType = newRepeatType;
+            }
+        },
+        getProject: () => project,
+        setProject: newProject => {
+            if (newProject instanceof ToDoProjectItem) {
+                project = newProject;
             }
         },
         getIsComplete: () => _isComplete,

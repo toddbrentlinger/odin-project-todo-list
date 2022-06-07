@@ -1,5 +1,5 @@
 import ToDo from "./todo.js";
-import { Filter } from "./filterType.js";
+import { Filter, FilterType } from "./filterType.js";
 import {v4 as uuidv4} from 'uuid';
 
 export function ToDoProjectItem(name, id = uuidv4()) {
@@ -23,14 +23,29 @@ export const ToDoProjectNew = (function() {
         ToDoProjectItem('default'),
     ];
 
+    const getProjectByName = projectName => {
+        return _projects.find(project => project.getName() === projectName);
+    };
+
     return {
+        getProjectByName,
+        getAllProjects: () => _projects,
+        addProjectName: projectName => {
+            
+            if (getProjectByName(projectName)) {
+                alert('Project name already exists');
+                return;
+            }
+            const projectItem = ToDoProjectItem(projectName);
+            _projects.push(projectItem);
+            // Add new FilterType for corresponding project
+            Filter.addFilterType(Filter.createFilterByProjectType(projectName));
+            return projectItem;
+        },
         addProject: todoProjectItem => {
             // Check if project name already exists
 
             _projects.push(todoProjectItem);
-        },
-        getProjectByName: projectName => {
-            return _projects.find(project => project.getName() === projectName);
         },
         getProjectById: projectId => {
             return _projects.find(project => project.getId() === projectId);

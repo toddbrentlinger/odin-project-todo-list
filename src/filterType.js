@@ -1,16 +1,34 @@
-import { isThisWeek, isToday, isTomorrow, isWithinInterval, subDays } from "date-fns";
+import { isThisWeek, isToday, isTomorrow, subDays } from "date-fns";
 
-export function FilterType(name, callback) {
+export function FilterType(name, callback, headerName = 'default') {
     return {
+        callback,
         getName: () => name,
         setName: newName => {
             name = newName;
         },
-        callback,
+        getHeaderName: () => headerName,
+        setHeaderName: newHeaderName => {
+            if (typeof newHeaderName !== 'string')
+                return;
+            headerName = newHeaderName;
+        },
     };
 }
 
 export const Filter = (function(){
+    const _createFilterByProjectCallback = projectName => {
+        return todo => {
+            const project = todo.getProject();
+            if (!project) return false;
+            return project.getName() === projectName;
+        };
+    };
+
+    const createFilterByProjectType = projectName => {
+        return FilterType(projectName, _createFilterByProjectCallback(projectName), 'project');
+    };
+
     let _filterTypes = [
         FilterType('today', todo => isToday(todo.getDueDate())),
         FilterType('tomorrow', todo => isTomorrow(todo.getDueDate())),
@@ -22,12 +40,13 @@ export const Filter = (function(){
                 {weekStartsOn: subDays(Date.now(), 2).getDay()}
             );
         }),
+        createFilterByProjectType('default'),
     ];
 
     const _isFilterTypeValid = filterTypeToTest => {
         // Check if correct instance type
-        if (!(filterTypeToTest instanceof FilterType))
-            return false;
+        // if (!(filterTypeToTest instanceof FilterType))
+        //     return false;
 
         // Check if 'name' attribute already exists in array of filter types
         if (_filterTypes.includes(filterType => filterType.getName() === filterTypeToTest.getName()))
@@ -38,13 +57,14 @@ export const Filter = (function(){
     };
 
     return {
+        createFilterByProjectType,
         getAllFilterTypes: () => _filterTypes,
         getFilterTypeByName: filterName => {
             return _filterTypes.find(filterType => filterType.getName() === filterName);
         },
         addFilterType: newFilterType => {
-            if (_isFilterTypeValid(FilterType)) {
-                _filterTypes.push();
+            if (_isFilterTypeValid(newFilterType)) {
+                _filterTypes.push(newFilterType);
             }
         },
         removeFilterType: filterTypeToRemove => {

@@ -14,15 +14,17 @@ export default function FilterTypeComponent(filterType = Filter.getFilterTypeByN
             const filterTypeElement = document.createElement('main');
 
             // Filter Title
-            filterTypeElement.appendChild(createElement('h3', {}, filterType.getName()));
+            let title = filterType.getName();
+            if (title.startsWith('project-')) {
+                title = title.split('-')[1];
+            }
+            filterTypeElement.appendChild(createElement('h3', {}, title));
 
-            // ToDo List
+            // ToDo list element
             const todoListElement = filterTypeElement.appendChild(createElement('div', {'class': 'todo-item-list'}));
 
             // Filter ToDo items using filterType callback
-            const filteredToDos = ToDoApp.getAllProjects().reduce((accum, todoProject) => {
-                return accum.concat([...todoProject.getToDos()].filter(filterType.callback));
-            }, []);
+            const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
 
             // Sort Filtered ToDo items by date
             filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());
@@ -34,7 +36,7 @@ export default function FilterTypeComponent(filterType = Filter.getFilterTypeByN
                 );
 
                 const todoElement = ToDoComponent(todo).render();
-                todoElement.style.animationDelay = `${index * 150}ms`;
+                todoElement.style.animationDelay = `${index * 100}ms`;
                 todoElementContainer.appendChild(todoElement);
             });
 

@@ -10,6 +10,7 @@ import FilterTypeComponent from "./filterTypeComponent.js";
 
 import { ToDoApp } from "./todoApp.js";
 import { parseISO } from "date-fns";
+import { ToDoProjectNew } from "./todoProject.js";
 
 /**
  * 
@@ -42,6 +43,20 @@ export default function ToDoAppComponent(contentElement) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
+        debugger;
+        // Get or create new project
+        let project;
+        if (formProps.project === _createNewProjectSelectValue && 
+            formProps['project-new-title'].length > 0
+        ) {
+            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
+            // project = ToDoProject(formProps['project-new-title']);
+            // ToDoApp.addProject(project);
+            _refreshSideNavComponent();
+        } else {
+            project = ToDoProjectNew.getProjectByName(formProps.project);
+            // project = ToDoApp.getProjectByName(formProps.project);
+        }
 
         // Create ToDo instance
         const todo = ToDo(
@@ -49,18 +64,11 @@ export default function ToDoAppComponent(contentElement) {
             formProps.description,
             parseISO(formProps.date),
             Priority.getPriorityLevelByValue(+formProps.priority),
-            Repeat.getRepeatTypeByName(formProps.repeat)
+            Repeat.getRepeatTypeByName(formProps.repeat),
+            project
         );
 
-        // Get or create new project
-        if (formProps.project === _createNewProjectSelectValue && 
-            formProps['project-new-title'].length > 0
-        ) {
-            ToDoApp.addProject(ToDoProject(formProps['project-new-title'], todo));
-            _refreshSideNavComponent();
-        } else {
-            ToDoApp.getProjectByName(formProps.project).addToDo(todo);
-        }
+        // project.addToDo(todo);
 
         _refreshMainComponent();
     };

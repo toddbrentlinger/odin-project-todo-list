@@ -20,10 +20,10 @@ export default function SideNavComponent(props) {
             .forEach(navLink => navLink.classList.remove('active'));
     };
 
-    const _createFilterTypeList = () => {
-        const filterTypeListElement = createElement('ul', {id: 'filter-type'});
+    const _createFilterTypeListElement = filterTypeArr => {
+        const filterTypeListElement = document.createElement('ul');
 
-        Filter.getAllFilterTypes().forEach(filterType => {
+        filterTypeArr.forEach(filterType => {
             const linkElement = createElement('a', {href: ''}, 
                 createElement('span', {}, filterType.getName())
             );
@@ -46,52 +46,38 @@ export default function SideNavComponent(props) {
         return filterTypeListElement;
     };
 
-    const _createProjectsList = () => {
-        const projectsListElement = createElement('ul', {id: 'projects'});
-
-        ToDoApp.getAllProjects().forEach(project => {
-            const linkElement = createElement('a', {href: ''}, 
-                createElement('span', {}, project.getName())
-            );
-
-            linkElement.dataset.key = `project-${project.getName()}`;
-
-            linkElement.addEventListener('click', e => {
-                e.preventDefault();
-                _removeActiveClassFromNavLinks();
-                e.currentTarget.classList.add('active');
-                _activeNavLinkKey = e.currentTarget.dataset.key;
-                props.handleSideNavLinkClick(ToDoProjectComponent(project));
-            }, false);
-
-            projectsListElement.appendChild(
-                createElement('li', {}, linkElement)
-            );
-        });
-
-        return projectsListElement;
-    };
-
     return {
         render: () => {
             _sideNavElement = createElement('nav', {id: 'sidenav'});
 
-            // Filter Types
+            // Sort FilterTypes into groups with same filter group name
+            // Key is filter group name and value is array of corresponding FilterTypes
+            const filterTypeObj = {};
+            let headerName;
+            Filter.getAllFilterTypes().forEach(filterType => {
+                headerName = filterType.getHeaderName();
+                if (filterTypeObj.hasOwnProperty(headerName)) {
+                    filterTypeObj[headerName].push(filterType);
+                } else {
+                    filterTypeObj[headerName] = [ filterType ];
+                }
+            });
+            
+            // Default options (ex. Today, Tomorrow, etc.)
             _sideNavElement.appendChild(
-                createElement('div', {id: 'filter-type-container'}, 
-                    _createFilterTypeList()
-                )
+                _createFilterTypeListElement(filterTypeObj['default'])
             );
-
-            _sideNavElement.appendChild(document.createElement('hr'));
-
-            // Projects
-            _sideNavElement.appendChild(
-                createElement('div', {id: 'projects-container'},
-                    createElement('h3', {}, 'Projects'),
-                    _createProjectsList()
-                )
-            );
+            
+            // Other options (Project, etc.)
+            for (const [headerName, filterTypeArr] of Object.entries(filterTypeObj)) {
+                if (headerName === 'default')
+                    continue;
+                _sideNavElement.append(
+                    document.createElement('hr'),
+                    createElement('h3', {}, headerName),
+                    _createFilterTypeListElement(filterTypeArr)
+                );
+            };
 
             // Add class to active nav link
             const activeNavLink = _sideNavElement.querySelector(`[data-key=${_activeNavLinkKey}`);
