@@ -48,6 +48,10 @@ export const ToDoApp = (function() {
         getAllProjects: () => {
             return ToDoProjectNew.getAllProjects();
         },
+        addToDo: (...newToDos) => {
+            _todos.push(...newToDos);
+        },
+        // TODO: Remove/refactor methods below
         addProject: (...newProjects) => {
             // Check if type is ToDoProject
             _todoProjects.push(...newProjects);

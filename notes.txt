@@ -50,15 +50,23 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
+6/6/22
+
+- Add validator to create ToDo form to check if new project name already exists.
+
+- ISSUE: Resetting form with New Project Name input enabled does NOT hide the element
+and set disabled to true. 
+SOLUTION: Add 'reset' event listener to form.
+
 6/3/22
 
-- ToDo has one-way ForeignKey relationship with ToDoProject, so 'project' property should be kept in ToDo
+X ToDo has one-way ForeignKey relationship with ToDoProject, so 'project' property should be kept in ToDo
 instead of 'todos' property in ToDoProject. Then can more easily move ToDoProjectComponent functionality 
 into FilterTypeComponent. 
 
 6/1/22
 
-- Combine functionality of FilterTypeComponent and ToDoProjectComponent?
+X Combine functionality of FilterTypeComponent and ToDoProjectComponent?
 
 5-30-22
 
@@ -80,5 +88,5 @@ that is hidden when disabled and slides into view when enabled.
 
 5-28-22
 
-- Inside form to create new ToDo for the 'Project' field, if 'Add New Project' is selected,
+X Inside form to create new ToDo for the 'Project' field, if 'Add New Project' is selected,
 open new field below to get new project name.

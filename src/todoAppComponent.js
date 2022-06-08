@@ -43,7 +43,7 @@ export default function ToDoAppComponent(contentElement) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
-        debugger;
+        
         // Get or create new project
         let project;
         if (formProps.project === _createNewProjectSelectValue && 
@@ -69,6 +69,7 @@ export default function ToDoAppComponent(contentElement) {
         );
 
         // project.addToDo(todo);
+        ToDoApp.addToDo(todo);
 
         _refreshMainComponent();
     };

@@ -24,7 +24,7 @@ export const ToDoProjectNew = (function() {
     ];
 
     const getProjectByName = projectName => {
-        return _projects.find(project => project.getName() === projectName);
+        return _projects.find(project => project.getName().toLowerCase() === projectName.toLowerCase());
     };
 
     return {

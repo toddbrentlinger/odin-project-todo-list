@@ -17,17 +17,19 @@ import './style.scss';
 
 (function() {
     const addSampleToDos = () => {
+        localStorage.clear();
+
         ToDoProjectNew.addProjectName('personal');
         ToDoProjectNew.addProjectName('work');
 
         ToDoApp.addProject(
             ToDoProject('default', 
-                ToDo('Default-weekly-3', 'description', subDays(Date.now(), 2), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('weekly')),
-                ToDo('Default-daily-2', 'description', subDays(Date.now(), 1), Priority.getPriorityLevelByValue(2), Repeat.getRepeatTypeByName('daily')),
-                ToDo('Default-once-1', 'description', new Date(Date.now()), Priority.getPriorityLevelByValue(1)),
-                ToDo('Default-weekly-2', 'description', addDays(Date.now(), 1), Priority.getPriorityLevelByValue(2), Repeat.getRepeatTypeByName('weekly')),
-                ToDo('Default-monthly-3', 'description', addDays(Date.now(), 3), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('monthly')),
-                ToDo('Default-daily-3', 'description', subDays(Date.now(), 2), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('daily'))
+                ToDo('Default-weekly-3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', subDays(Date.now(), 2), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('weekly')),
+                ToDo('Default-daily-2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', subDays(Date.now(), 1), Priority.getPriorityLevelByValue(2), Repeat.getRepeatTypeByName('daily')),
+                ToDo('Default-once-1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', new Date(Date.now()), Priority.getPriorityLevelByValue(1)),
+                ToDo('Default-weekly-2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', addDays(Date.now(), 1), Priority.getPriorityLevelByValue(2), Repeat.getRepeatTypeByName('weekly')),
+                ToDo('Default-monthly-3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', addDays(Date.now(), 3), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('monthly')),
+                ToDo('Default-daily-3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla ultricies ante. Sed finibus vitae ligula quis luctus. Donec lobortis venenatis enim. Cras quis lectus ac felis iaculis faucibus. Proin pulvinar massa vel venenatis vehicula. Proin ultrices, quam in efficitur aliquet, orci diam congue felis, non pretium sem nisi non ante. Sed fringilla gravida nibh id ornare.', subDays(Date.now(), 2), Priority.getPriorityLevelByValue(3), Repeat.getRepeatTypeByName('daily'))
             ),
             ToDoProject('personal', 
                 ToDo('Personal-once-1', 'personal-description1', new Date(Date.now()), Priority.getPriorityLevelByValue(1), Repeat.getRepeatTypeByName('once'), ToDoProjectNew.getProjectByName('personal')),
