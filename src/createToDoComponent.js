@@ -1,5 +1,5 @@
 import { ToDoApp } from "./todoApp.js";
-import ToDoProject from "./todoProject.js";
+import ToDoProject, { ToDoProjectNew } from "./todoProject.js";
 import ToDo from "./todo.js";
 import { Repeat } from "./repeatType.js";
 import { Priority } from "./priorityLevel.js";
@@ -16,6 +16,7 @@ export default function CreateToDoComponent(props) {
     let _createToDoElement = null;
     let _createNewProjectContainerElement = null;
     let _createNewProjectInputElement = null;
+    let _createToDoTitleInputElement = null;
 
     const _handleFormSubmit = e => {
         props.handleQuickAddToDoSubmit(e);
@@ -35,7 +36,11 @@ export default function CreateToDoComponent(props) {
     const _createRepeatTypeOptions = () => {
         return Repeat.getAllRepeatTypes().map((repeatType, index) => {
             const option = createElement('option', {value: repeatType.getName()}, repeatType.getName());
-            if (index === 0) {
+            if (props.hasOwnProperty('repeat')) {
+                if (props.repeat === repeatType) {
+                    option.selected = true;
+                }
+            } else if (index === 0) {
                 option.selected = true;
             }
             return option;
@@ -45,7 +50,11 @@ export default function CreateToDoComponent(props) {
     const _createPriorityTypeOptions = () => {
         return Priority.getAllPriorityLevels().map(priorityLevel => {
             const option = createElement('option', {value: priorityLevel.getValue()}, priorityLevel.getColor());
-            if (priorityLevel.getValue() === 0) {
+            if (props.hasOwnProperty('priority')) {
+                if (props.priority === priorityLevel) {
+                    option.selected = true;
+                }
+            } else if (priorityLevel.getValue() === 0) {
                 option.selected = true;
             }
             return option;
@@ -74,7 +83,11 @@ export default function CreateToDoComponent(props) {
     const _createProjectOptions = () => {
         const projectOptions = ToDoApp.getAllProjects().map(todoProject => {
             const option = createElement('option', {value: todoProject.getName()}, todoProject.getName());
-            if (todoProject.getName() === 'default') {
+            if (props.hasOwnProperty('project')) {
+                if (props.project === todoProject) {
+                    option.selected = true;
+                }
+            } else if (todoProject.getName() === 'default') {
                 option.selected = true;
             }
             return option;
@@ -105,7 +118,8 @@ export default function CreateToDoComponent(props) {
             );
 
             // Header - Title
-            header.appendChild(createElement('h2', {}, 'Create New ToDo'));
+
+            header.appendChild(createElement('h2', {}, props.headerTitle || 'Create New ToDo'));
 
             // Header - Close Icon
             header.appendChild(
@@ -121,13 +135,18 @@ export default function CreateToDoComponent(props) {
 
             // Title
 
+            _createToDoTitleInputElement = createElement('input', {
+                type: 'text', minlength: '1', maxlength: '50', 
+                id: 'todo-title-input', name: 'title', required: true,
+                autofocus: true,
+                value: props.title || '',
+            });
+
             createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-title'}, 
                     createElement('label', {'for': 'todo-title-input'}, 
                         createElement('span', {}, 'Title'),
-                        createElement('input', 
-                            {type: 'text', minlength: '1', maxlength: '50', id: 'todo-title-input', name: 'title', required: true}
-                        )
+                        _createToDoTitleInputElement
                     )
                 )
             );
@@ -138,9 +157,12 @@ export default function CreateToDoComponent(props) {
                 createElement('div', {id: 'create-todo-description'}, 
                     createElement('label', {'for': 'todo-description-input'}, 
                         createElement('span', {}, 'Description'),
-                        createElement('input', 
-                            {type: 'text', maxlength: '200', id: 'todo-description-input', name: 'description'}
-                        )
+                        createElement('textarea', {
+                            id: 'todo-description-input', name: 'description',
+                            rows: '5', columns: '33',
+                            maxlength: '200',
+                            value: props.description || '',
+                        })
                     )
                 )
             );
@@ -151,9 +173,11 @@ export default function CreateToDoComponent(props) {
                 createElement('div', {id: 'create-todo-date'}, 
                     createElement('label', {'for': 'todo-date-input'}, 
                         createElement('span', {}, 'Due Date'),
-                        createElement('input', 
-                            {type: 'datetime-local', id: 'todo-date-input', name: 'date', required: true}
-                        )
+                        createElement('input', {
+                            type: 'datetime-local', id: 'todo-date-input', 
+                            name: 'date', required: true,
+                            value: props.date || ''
+                        })
                     )
                 )
             );
@@ -205,15 +229,25 @@ export default function CreateToDoComponent(props) {
             _createNewProjectInputElement = createElement('input', {
                 type: 'text', 
                 id: 'todo-project-add-new-input', 
-                name: 'project-new-title', 
+                name: 'project-new-title',
+                placeholder: 'Enter New Project Title',
                 maxlength: 50,
                 disabled: true,
             });
 
+            _createNewProjectInputElement.addEventListener('input', e => {
+                if (ToDoProjectNew.getProjectByName(_createNewProjectInputElement.value)) {
+                    _createNewProjectInputElement.setCustomValidity('Project name already exists!');
+                    _createNewProjectInputElement.reportValidity();
+                } else {
+                    _createNewProjectInputElement.setCustomValidity('');
+                }
+            }, false);
+
             _createNewProjectContainerElement = createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-project-add-new', 'class': 'hide'}, 
                     createElement('label', {'for': 'todo-project-add-new-input'}, 
-                        createElement('span', {}, 'New Project Title:'),
+                        //createElement('span', {}, 'New Project Title:'),
                         _createNewProjectInputElement
                     )
                 )
@@ -224,11 +258,16 @@ export default function CreateToDoComponent(props) {
             createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-btns'}, 
                     createElement('button', {type: 'reset'}, 'Reset'),
-                    createElement('button', {type: 'submit'}, 'Add')
+                    createElement('button', {type: 'submit'}, props.submitBtnText || 'Add')
                 )
             );
 
             return _createToDoElement;
+        },
+        setInitialFocus: () => {
+            if (_createToDoTitleInputElement) {
+                _createToDoTitleInputElement.focus();
+            }
         },
     };
 }

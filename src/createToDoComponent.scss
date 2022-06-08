@@ -12,9 +12,28 @@
     place-items: center;
 
     #create-todo-form-container {
+        // min-width: 60vw;
+        // min-height: 60vh;
         padding: 2rem;
+        // Grid
+        display: grid;
+        grid-template-rows: auto 1fr;
         // Background
         background-color: var(--base-white);
+        // Animation
+        animation-name: expand;
+        animation-duration: 500ms;
+        animation-timing-function: ease;
+        animation-fill-mode: both;
+
+        @keyframes expand {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
         #create-todo-form-header {
             // Grid
@@ -70,8 +89,15 @@
         }
 
         #create-todo-form {
+            // Grid
+            display: grid;
+
             label, span {
                 display: block;
+            }
+
+            input, select, textarea {
+                width: 100%;
             }
 
             select {
@@ -82,15 +108,35 @@
                 //display: none;
             }
 
+            #create-todo-project-add-new {
+                // position: relative;
+
+                // input {
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     bottom: 0;
+                //     transition: top 300ms ease;
+                // }
+
+                &.hide {
+                    display: none;
+
+                    // input {
+                    //     top: 100%;
+                    // }
+                }
+            }
+
             #create-todo-btns {
                 // Grid
                 display: grid;
                 grid-auto-flow: column;
+
+                button {
+                    cursor: pointer;
+                }
             }
         }
-    }
-
-    .hide {
-        display: none;
     }
 }
