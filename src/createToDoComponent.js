@@ -18,6 +18,11 @@ export default function CreateToDoComponent(props) {
     let _createNewProjectInputElement = null;
     let _createToDoTitleInputElement = null;
 
+    // Add default value of props.createNewProjectSelectValue = 'create-new-project'
+    if (!props.hasOwnProperty('createNewProjectSelectValue')) {
+        props.createNewProjectSelectValue = 'create-new-project';
+    }
+
     const _handleFormSubmit = e => {
         props.handleQuickAddToDoSubmit(e);
 
@@ -153,31 +158,41 @@ export default function CreateToDoComponent(props) {
 
             // Description
 
+            const descriptionTextAreaElement = createElement('textarea', {
+                id: 'todo-description-input', name: 'description',
+                rows: '5', columns: '33',
+                maxlength: '500',
+            });
+            descriptionTextAreaElement.value = props.description || '';
+
             createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-description'}, 
                     createElement('label', {'for': 'todo-description-input'}, 
                         createElement('span', {}, 'Description'),
-                        createElement('textarea', {
-                            id: 'todo-description-input', name: 'description',
-                            rows: '5', columns: '33',
-                            maxlength: '200',
-                            value: props.description || '',
-                        })
+                        descriptionTextAreaElement
                     )
                 )
             );
 
             // Due Date
 
+            const dueDateElement = createElement('input', {
+                type: 'datetime-local', id: 'todo-date-input', 
+                name: 'date', required: true,
+            });
+
+            // Add default value if provided in props
+            if (props.hasOwnProperty('dueDate')) {
+                dueDateElement.value = props.dueDate.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)[0] || '';
+            } else {
+                dueDateElement.value = '';
+            }
+
             createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-date'}, 
                     createElement('label', {'for': 'todo-date-input'}, 
                         createElement('span', {}, 'Due Date'),
-                        createElement('input', {
-                            type: 'datetime-local', id: 'todo-date-input', 
-                            name: 'date', required: true,
-                            value: props.date || ''
-                        })
+                        dueDateElement
                     )
                 )
             );

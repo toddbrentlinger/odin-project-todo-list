@@ -35,7 +35,7 @@ export default function ToDo(title, description, dueDate, priorityLevel = Priori
                 dueDate = newDueDate;
             }
         },
-        getDueDateAsString: () => format(dueDate, "iii MMM d, yyyy"),
+        getDueDateAsString: () => format(dueDate, "iii MMM d, yyyy h:mm a"),
         getDueDateDatetimeAttribute: () => formatISO(dueDate),
         getPriorityLevel: () => priorityLevel,
         setPriorityLevel: newPriorityLevel => {

@@ -1,18 +1,78 @@
 import ToDo from "./todo.js";
+import { ToDoProjectNew } from "./todoProject.js";
+import { Priority } from "./priorityLevel.js";
+import { Repeat } from "./repeatType.js";
+import CreateToDoComponent from "./createToDoComponent.js";
 import { createElement } from "./utilities.js";
 import './todoComponent.scss';
+import ToDoLocalStorage from "./todoLocalStorage.js";
+
+import { parseISO } from "date-fns";
 
 export default function ToDoComponent(todo) {
     let _todoElement = null;
     let _detailsDropdownContainerElement = null;
+    let _expandBtnElement = null;
     let _bIsExpanded = false;
 
-    const _handleExpandBtnClick = () => {
+    const _handleExpandBtnClick = e => {
         if (_bIsExpanded) {
-            _closeDetailsDropdown();
+            _closeDetailsDropdown(e);
         } else {
-            _openDetailsDropdown();
+            _openDetailsDropdown(e);
         }
+    };
+
+    const _handleEditToDoSubmit = e => {
+        console.log('ToDo edit form submitted!');
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
+
+        // Update each property of ToDo
+
+        // Title
+        if (todo.getTitle() !== formProps.title) {
+            todo.setTitle(formProps.title);
+        }
+
+        // Description
+        if (todo.getDescription() !== formProps.description) {
+            todo.setDescription(formProps.description);
+        }
+
+        // Date
+        parseISO(formProps.date);
+
+        // Priority Level
+        const priorityLevel = Priority.getPriorityLevelByValue(+formProps.priority);
+        if (todo.getPriorityLevel().getValue() !== +formProps.priority) {
+            todo.setPriorityLevel(priorityLevel);
+        }
+
+        // Repeat
+        const repeatType = Repeat.getRepeatTypeByName(formProps.repeat);
+        if (todo.getRepeatType() !== repeatType) {
+            todo.setRepeatType(repeatType);
+        }
+
+        // Project
+        let project;
+        if (formProps.project === 'create-new-project' && formProps['project-new-title'].length > 0) {
+            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
+            //_refreshSideNavComponent();
+        } else {
+            project = ToDoProjectNew.getProjectByName(formProps.project);
+        }
+        if (todo.getProject() !== project) {
+            todo.setProject(project);
+        }
+
+        // Save ToDo to localStorage to update with existing values
+        ToDoLocalStorage.saveToDo(todo);
+
+
     };
 
     const _createToDoDropdownElement = () => {
@@ -27,21 +87,21 @@ export default function ToDoComponent(todo) {
             createElement('p', {'class': 'todo-description todo-details-item'}, todo.getDescription())
         );
 
-        // Priority
-        const priorityLevel = todo.getPriorityLevel();
-        detailsDropdownElement.appendChild(
-            createElement('div', {'class': 'todo-priority-container todo-details-item'}, 
-                createElement('div', {}, 'Priority: '),
-                createElement('div', {}, `(${priorityLevel.getValue()}) ${priorityLevel.getColor()}`)
-            )
-        );
-
         // Repeat
         const repeatType = todo.getRepeatType();
         detailsDropdownElement.appendChild(
             createElement('div', {'class': 'todo-repeat-container todo-details-item'}, 
                 createElement('div', {}, 'Repeat: '),
                 createElement('div', {}, repeatType.getName())
+            )
+        );
+
+        // Priority
+        const priorityLevel = todo.getPriorityLevel();
+        detailsDropdownElement.appendChild(
+            createElement('div', {'class': 'todo-priority-container todo-details-item'}, 
+                createElement('div', {}, 'Priority: '),
+                createElement('div', {}, `(${priorityLevel.getValue()}) ${priorityLevel.getColor()}`)
             )
         );
 
@@ -61,28 +121,61 @@ export default function ToDoComponent(todo) {
 
         // Btn - Delete
         btnContainer.appendChild(
-            createElement('button', {'class': 'todo-btn-delete'}, 'Delete')
+            createElement('button', {'class': 'todo-btn-delete'}, 
+                createElement('i', {'class': 'fas fa-trash-alt'}),
+                createElement('span', {}, 'Delete')
+            )
         );
 
         // Btn - Edit
-        btnContainer.appendChild(
-            createElement('button', {'class': 'todo-btn-edit'}, 'Edit')
+        const editBtn = btnContainer.appendChild(
+            createElement('button', {'class': 'todo-btn-edit'}, 
+                createElement('i', {'class': 'fas fa-edit'}), 
+                createElement('span', {}, 'Edit')
+            )
         );
+        editBtn.addEventListener('click', () => {
+            console.log('ToDo edit button clicked!');
+            document.getElementById('content').appendChild(
+                CreateToDoComponent({
+                    handleQuickAddToDoSubmit: _handleEditToDoSubmit,
+                    headerTitle: 'Edit ToDo',
+                    title: todo.getTitle(),
+                    description: todo.getDescription(),
+                    dueDate: todo.getDueDateDatetimeAttribute(),
+                    priority: todo.getPriorityLevel(),
+                    repeat: todo.getRepeatType(),
+                    project: todo.getProject(),
+                    submitBtnText: 'Update',
+                }).render()
+            );
+        }, false);
 
         return _detailsDropdownContainerElement;
     };
 
-    const _openDetailsDropdown = () => {
+    const _openDetailsDropdown = e => {
         _todoElement.appendChild(_createToDoDropdownElement());
         _bIsExpanded = true;
+
+        const newExpandBtnElement = createElement('i', {'class': 'fas fa-chevron-circle-up'});
+        _expandBtnElement.replaceWith(newExpandBtnElement);
+        _expandBtnElement = newExpandBtnElement;
+
+        e.currentTarget.classList.remove('close');
     };
 
-    const _closeDetailsDropdown = () => {
+    const _closeDetailsDropdown = e => {
         if (!_detailsDropdownContainerElement)
             return;
-
-            _detailsDropdownContainerElement.remove();
+        _detailsDropdownContainerElement.remove();
         _bIsExpanded = false;
+
+        const newExpandBtnElement = createElement('i', {'class': 'fas fa-chevron-circle-down'});
+        _expandBtnElement.replaceWith(newExpandBtnElement);
+        _expandBtnElement = newExpandBtnElement;
+
+        e.currentTarget.classList.add('close');
     };
 
     return {
@@ -120,9 +213,15 @@ export default function ToDoComponent(todo) {
             );
 
             // Expand Button
-            const expandBtn = createElement('button', {'class': 'todo-btn-expand close'}, '+');
-            expandBtn.addEventListener('click', _handleExpandBtnClick, false);
-            headerElement.appendChild(expandBtn);
+            _expandBtnElement = createElement('i', {'class': `fas fa-chevron-circle-${_bIsExpanded ? 'up' : 'down'}`});
+            const expandBtnContainer = createElement('div', {'class': 'todo-btn-expand'}, 
+                _expandBtnElement
+            );
+            if (!_bIsExpanded) {
+                expandBtnContainer.classList.add('close');
+            }
+            expandBtnContainer.addEventListener('click', _handleExpandBtnClick, false);
+            headerElement.appendChild(expandBtnContainer);
 
             if (_bIsExpanded) {
                 _todoElement.appendChild(
