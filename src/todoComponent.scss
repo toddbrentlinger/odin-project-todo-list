@@ -31,7 +31,7 @@
         // Grid
         display: grid;
         grid-template-columns: auto 1fr auto;
-        grid-auto-rows: auto;
+        grid-template-rows: repeat(2, auto);
         grid-template-areas: 
             "checkbox title expand-btn"
             "checkbox datetime expand-btn";
@@ -70,9 +70,46 @@
             grid-area: datetime;
         }
         .todo-btn-expand {
+            --chevron-bar-width: 50%;
+
             cursor: pointer;
+            height: 100%;
+            aspect-ratio: 1;
+            border: 2px solid red;
+            border-radius: 50%;
             // Grid
             grid-area: expand-btn;
+            // Position
+            position: relative;
+
+            &::before {
+                content: '';
+                // Position
+                position: absolute;
+                width: var(--chevron-bar-width);
+                height: var(--chevron-bar-width);
+                top: calc(0.5 * (100% - var(--chevron-bar-width)));
+                left: calc(0.5 * (100% - var(--chevron-bar-width)));
+                // Border
+                border-width: 0 4px 4px 0;
+                border-color: black;
+                border-style: solid;
+                // Transform
+                transform: translateY(calc(0.25 * var(--chevron-bar-width))) rotate(-135deg);
+                // Transition
+                transition: transform 300ms ease;
+            }
+
+            i {
+                // TEMP to hide FontAwesome icon
+                display: none;
+            }
+
+            &.close {
+                &::before {
+                    transform: translateY(calc(-0.25 * var(--chevron-bar-width))) rotate(45deg);
+                }
+            }
         }
     }
 
@@ -102,6 +139,16 @@
                 // Grid
                 display: grid;
                 grid-auto-flow: column;
+            }
+
+            .todo-btn-container {
+                // Flex
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    cursor: pointer;
+                }
             }
         }
 
