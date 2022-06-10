@@ -1,5 +1,42 @@
+import ToDo from "./todo";
+import { Repeat } from "./repeatType.js";
+import { Priority } from "./priorityLevel.js";
+import { ToDoProjectNew } from "./todoProject.js";
+
 /** Module to save ToDo objects to localStorage. */
 const ToDoLocalStorage = (function(){
+    const _createToDoFromJSON = jsonObj => {
+        const priority = Priority.getPriorityLevelByValue(+jsonObj.priority.value) 
+            || Priority.addPriorityLevel(PriorityLevel(+jsonObj.priority.value, jsonObj.priority.color))
+            || undefined;
+
+        const repeat = Repeat.getRepeatTypeByName(jsonObj.repeat) 
+            || Repeat.addRepeatType(RepeatType(jsonObj.repeat))
+            || undefined;
+        
+        const project = ToDoProjectNew.getProjectByName(jsonObj.project)
+            || ToDoProjectNew.addProjectName(jsonObj.project) 
+            || undefined;
+            
+        return ToDo(
+            jsonObj.title,
+            jsonObj.description,
+            new Date(jsonObj.dueDate),
+            priority,
+            repeat,
+            project,
+            jsonObj.id
+        );
+    };
+
+    const _getAllToDosAsJSON = () => {
+        return Object.entries(localStorage).map(entry => {
+            const id = entry[0];
+            const parsedJSON = JSON.parse(entry[1]);
+            return parsedJSON;
+        });
+    };
+
     return {
         /**
          * Copied from https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#testing_for_availability
@@ -48,12 +85,15 @@ const ToDoLocalStorage = (function(){
         removeToDo: todo => {
             localStorage.removeItem(todo.getId())
         },
-        getAllToDosAsJSON: () => {
-            return Object.entries(localStorage).map(entry => {
-                const id = entry[0];
-                const parsedJSON = JSON.parse(entry[1]);
-                return parsedJSON;
+        getAllToDos: () => {
+            const todoArr = [];
+            _getAllToDosAsJSON().forEach(todoJSON => {
+                const todo = _createToDoFromJSON(todoJSON);
+                if (todo) {
+                    todoArr.push(todo);
+                }
             });
+            return todoArr;
         },
         getToDoByIdAsJSON: todoId => {
             const todoEntry = localStorage.getItem(todoId);
