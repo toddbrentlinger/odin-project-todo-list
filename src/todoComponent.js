@@ -4,10 +4,10 @@ import { Priority } from "./priorityLevel.js";
 import { Repeat } from "./repeatType.js";
 import CreateToDoComponent from "./createToDoComponent.js";
 import { createElement } from "./utilities.js";
-import './todoComponent.scss';
 import ToDoLocalStorage from "./todoLocalStorage.js";
-
 import { parseISO } from "date-fns";
+
+import './todoComponent.scss';
 
 export default function ToDoComponent(todo) {
     let _todoElement = null;
@@ -71,8 +71,27 @@ export default function ToDoComponent(todo) {
 
         // Save ToDo to localStorage to update with existing values
         ToDoLocalStorage.saveToDo(todo);
+    };
 
+    const _handleDeleteToDoBtnClick = e => {
+        console.log('ToDo delete button clicked!');
+    };
 
+    const _handleEditToDoBtnClick = e => {
+        console.log('ToDo edit button clicked!');
+        document.getElementById('content').appendChild(
+            CreateToDoComponent({
+                handleQuickAddToDoSubmit: _handleEditToDoSubmit,
+                headerTitle: 'Edit ToDo',
+                title: todo.getTitle(),
+                description: todo.getDescription(),
+                dueDate: todo.getDueDateDatetimeAttribute(),
+                priority: todo.getPriorityLevel(),
+                repeat: todo.getRepeatType(),
+                project: todo.getProject(),
+                submitBtnText: 'Update',
+            }).render()
+        );
     };
 
     const _createToDoDropdownElement = () => {
@@ -120,12 +139,13 @@ export default function ToDoComponent(todo) {
         );
 
         // Btn - Delete
-        btnContainer.appendChild(
+        const deleteBtn = btnContainer.appendChild(
             createElement('button', {'class': 'todo-btn-delete'}, 
                 createElement('i', {'class': 'fas fa-trash-alt'}),
                 createElement('span', {}, 'Delete')
             )
         );
+        deleteBtn.addEventListener('click', _handleDeleteToDoBtnClick, false);
 
         // Btn - Edit
         const editBtn = btnContainer.appendChild(
@@ -134,22 +154,7 @@ export default function ToDoComponent(todo) {
                 createElement('span', {}, 'Edit')
             )
         );
-        editBtn.addEventListener('click', () => {
-            console.log('ToDo edit button clicked!');
-            document.getElementById('content').appendChild(
-                CreateToDoComponent({
-                    handleQuickAddToDoSubmit: _handleEditToDoSubmit,
-                    headerTitle: 'Edit ToDo',
-                    title: todo.getTitle(),
-                    description: todo.getDescription(),
-                    dueDate: todo.getDueDateDatetimeAttribute(),
-                    priority: todo.getPriorityLevel(),
-                    repeat: todo.getRepeatType(),
-                    project: todo.getProject(),
-                    submitBtnText: 'Update',
-                }).render()
-            );
-        }, false);
+        editBtn.addEventListener('click', _handleEditToDoBtnClick, false);
 
         return _detailsDropdownContainerElement;
     };
