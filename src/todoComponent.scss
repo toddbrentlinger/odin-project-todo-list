@@ -1,13 +1,17 @@
-.todo-item-container {
-    --header-line-height: 1em;
+:root {
+    --header-line-height: 1.2em;
+    --checkbox-size: 1.6rem;
+    --chevron-bar-width: 50%;
+    --circle-button-width: 90%;
+}
 
+.todo-item-container {
     overflow: hidden;
 }
 
 .todo-item {
-    --checkbox-size: 1.6rem;
-
     border: 2px solid red;
+    line-height: var(--header-line-height);
     // Position
     position: relative;
     top: 0;
@@ -71,11 +75,10 @@
             grid-area: datetime;
         }
         .todo-btn-expand {
-            --chevron-bar-width: 50%;
-
             cursor: pointer;
-            height: 100%;
-            border: 2px solid red;
+            width: var(--circle-button-width);
+            height: var(--circle-button-width);
+            //border: 2px solid var(--base-black);
             border-radius: 50%;
             // Grid
             grid-area: expand-btn;
@@ -92,12 +95,20 @@
                 left: calc(0.5 * (100% - var(--chevron-bar-width)));
                 // Border
                 border-width: 0 4px 4px 0;
-                border-color: black;
+                border-color: var(--base-black);
                 border-style: solid;
                 // Transform
                 transform: translateY(calc(0.25 * var(--chevron-bar-width))) rotate(-135deg);
                 // Transition
                 transition: transform 300ms ease;
+            }
+
+            &:hover, &:active, &:focus {
+                background-color: var(--base-black);
+
+                &::before {
+                    border-color: var(--base-white);
+                }
             }
 
             i {
@@ -160,5 +171,9 @@
                 transform: scaleY(1);
             }
         }
+    }
+
+    i[class^='fa'] {
+        margin-right: 0.2em;
     }
 }

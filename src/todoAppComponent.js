@@ -8,7 +8,7 @@ import { Repeat } from "./repeatType.js";
 
 import FilterTypeComponent from "./filterTypeComponent.js";
 
-import { ToDoApp } from "./todoApp.js";
+import ToDoApp from "./todoApp.js";
 import { parseISO } from "date-fns";
 import { ToDoProjectNew } from "./todoProject.js";
 
@@ -17,7 +17,7 @@ import { ToDoProjectNew } from "./todoProject.js";
  * @param {Element} contentElement 
  * @returns {Object}
  */
-export default function ToDoAppComponent(contentElement) {
+const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
     const _createNewProjectSelectValue = 'create-new-project';
 
     const _refreshSideNavComponent = () => {
@@ -87,7 +87,7 @@ export default function ToDoAppComponent(contentElement) {
     });
 
     return {
-        render: () => {
+        render: (contentElement) => {
             // Clear contentElement of any children
             while (contentElement.firstChild) {
                 contentElement.removeChild(contentElement.firstChild);
@@ -111,4 +111,6 @@ export default function ToDoAppComponent(contentElement) {
             return contentElement;
         },   
     };
-}
+})();
+
+export default ToDoAppComponent;
