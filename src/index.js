@@ -1,15 +1,13 @@
-import { ToDoApp } from './todoApp.js';
+import ToDoApp from './todoApp.js';
 import ToDoProject, { ToDoProjectItem, ToDoProjectNew } from './todoProject.js';
 import ToDo from './todo.js';
 import { Priority } from './priorityLevel.js';
 import { Repeat } from './repeatType.js';
-import { addDays, subDays } from 'date-fns';
-import ToDoLocalStorage from './todoLocalStorage.js';
 import { Filter } from './filterType.js';
+import ToDoLocalStorage from './todoLocalStorage.js';
+import { addDays, subDays } from 'date-fns';
 
 import ToDoProjectComponent from './todoProjectComponent.js';
-import CreateToDoComponent from './createToDoComponent.js';
-
 import ToDoAppComponent from './todoAppComponent.js';
 
 import './meyer-reset.scss';
@@ -58,8 +56,8 @@ import './style.scss';
 
     //addSampleToDos();
 
-    ToDoApp.init();
+    ToDoApp.addToDo(...ToDoLocalStorage.getAllToDos());
 
-    ToDoAppComponent(document.getElementById('content')).render();
+    ToDoAppComponent.render(document.getElementById('content'));
 
 })();

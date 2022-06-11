@@ -1,4 +1,4 @@
-import { ToDoApp } from "./todoApp.js";
+import ToDoApp from "./todoApp.js";
 import ToDoProject, { ToDoProjectNew } from "./todoProject.js";
 import ToDo from "./todo.js";
 import { Repeat } from "./repeatType.js";

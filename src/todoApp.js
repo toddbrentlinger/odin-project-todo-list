@@ -1,15 +1,11 @@
-import ToDoLocalStorage from "./todoLocalStorage.js";
 import { ToDoProjectNew } from "./todoProject.js";
 
 /** Module for ToDo application logic */
-export const ToDoApp = (function() {
+const ToDoApp = (function() {
     let _todoProjects = [];
     let _todos = [];
 
     return {
-        init: () => {
-            _todos.push(...ToDoLocalStorage.getAllToDos());
-        },
         getAllToDos: () => {
             return _todos;
         },
@@ -19,7 +15,7 @@ export const ToDoApp = (function() {
         addToDo: (...newToDos) => {
             _todos.push(...newToDos);
         },
-        
+
         // TODO: Remove/refactor methods below
         addProject: (...newProjects) => {
             // Check if type is ToDoProject
@@ -53,3 +49,5 @@ export const ToDoApp = (function() {
         },
     };
 })();
+
+export default ToDoApp;

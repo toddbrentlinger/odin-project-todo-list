@@ -1,5 +1,4 @@
 import { Filter } from "./filterType.js";
-import { ToDoApp } from "./todoApp.js";
 import { createElement } from "./utilities.js";
 
 import './sideNavComponent.scss';
