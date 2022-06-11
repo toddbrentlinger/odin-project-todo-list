@@ -8,6 +8,7 @@ import ToDoLocalStorage from "./todoLocalStorage.js";
 import { parseISO } from "date-fns";
 
 import './todoComponent.scss';
+import FontAwesomeIcon from "./fontAwesomeIcon.js";
 
 export default function ToDoComponent(todo) {
     let _todoElement = null;
@@ -16,6 +17,7 @@ export default function ToDoComponent(todo) {
     let _bIsExpanded = false;
 
     const _handleExpandBtnClick = e => {
+        e.preventDefault();
         if (_bIsExpanded) {
             _closeDetailsDropdown(e);
         } else {
@@ -75,10 +77,12 @@ export default function ToDoComponent(todo) {
 
     const _handleDeleteToDoBtnClick = e => {
         console.log('ToDo delete button clicked!');
+        e.preventDefault();
     };
 
     const _handleEditToDoBtnClick = e => {
         console.log('ToDo edit button clicked!');
+        e.preventDefault();
         document.getElementById('content').appendChild(
             CreateToDoComponent({
                 handleQuickAddToDoSubmit: _handleEditToDoSubmit,
@@ -199,7 +203,7 @@ export default function ToDoComponent(todo) {
             // Checkbox
             headerElement.appendChild(
                 createElement('div', {'class': 'todo-checkbox-container'}, 
-                    createElement('div', {'class': 'todo-checkbox'})
+                    createElement('button', {'class': 'todo-checkbox', 'aria-label': 'Check this box if ToDo has been completed.'})
                 )
             );
 
@@ -212,14 +216,15 @@ export default function ToDoComponent(todo) {
             const datetime = headerElement.appendChild(
                 createElement(
                     'time', 
-                    {'class': 'todo-datetime', 'datetime': todo.getDueDateDatetimeAttribute()}, 
+                    {'class': 'todo-datetime', 'datetime': todo.getDueDateDatetimeAttribute()},
+                    FontAwesomeIcon('far fa-calendar-alt').render(),
                     todo.getDueDateAsString()
                 )
             );
 
             // Expand Button
             _expandBtnElement = createElement('i', {'class': `fas fa-chevron-circle-${_bIsExpanded ? 'up' : 'down'}`});
-            const expandBtnContainer = createElement('div', {'class': 'todo-btn-expand'}, 
+            const expandBtnContainer = createElement('button', {'class': 'todo-btn-expand', 'aria-label': 'Expand for more details about ToDo.'}, 
                 _expandBtnElement
             );
             if (!_bIsExpanded) {
