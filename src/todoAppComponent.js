@@ -74,9 +74,15 @@ const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
         _refreshMainComponent();
     };
 
-    const _handleSideNavLinkClick = componentToDisplay => {
-        _mainComponent = componentToDisplay;
+    const _handleSideNavLinkClick = filterType => {
+        _mainComponent = FilterTypeComponent({filterType});
         _refreshMainComponent();
+
+        // Filter ToDo items using filterType callback
+        const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
+
+        // Sort Filtered ToDo items by date
+        filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());
     };
 
     let _mainElement = null;

@@ -8,13 +8,25 @@ import { createElement } from "./utilities.js";
  * @param {FilterType} filterType
  * @returns {Object}
  */
-export default function FilterTypeComponent(filterType = Filter.getFilterTypeByName('today')) {
+export default function FilterTypeComponent(props = {}) {
+    const _defaultProps = {
+        filterType: Filter.getFilterTypeByName('today'),
+        deleteToDoHandler: e => e.preventDefault(),
+        editToDoHandler: e => e.preventDefault(),
+    };
+    // Add any missing properties to 'props' with default values
+    for (const [key, value] of Object.entries(_defaultProps)) {
+        if (!props.hasOwnProperty(key)) {
+            props[key] = value;
+        }
+    }
+
     return {
         render: () => {
             const filterTypeElement = document.createElement('main');
 
             // Filter Title
-            let title = filterType.getName();
+            let title = props.filterType.getName();
             if (title.startsWith('project-')) {
                 title = title.split('-')[1];
             }
@@ -24,7 +36,7 @@ export default function FilterTypeComponent(filterType = Filter.getFilterTypeByN
             const todoListElement = filterTypeElement.appendChild(createElement('div', {'class': 'todo-item-list'}));
 
             // Filter ToDo items using filterType callback
-            const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
+            const filteredToDos = ToDoApp.getAllToDos().filter(props.filterType.callback);
 
             // Sort Filtered ToDo items by date
             filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());

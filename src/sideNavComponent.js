@@ -1,9 +1,6 @@
 import { Filter } from "./filterType.js";
 import { createElement } from "./utilities.js";
-
 import './sideNavComponent.scss';
-import FilterTypeComponent from "./filterTypeComponent.js";
-import ToDoProjectComponent from "./todoProjectComponent.js";
 
 /**
  * 
@@ -19,6 +16,14 @@ export default function SideNavComponent(props) {
             .forEach(navLink => navLink.classList.remove('active'));
     };
 
+    const _handleSideNavLinkClick = (e, filterType) => {
+        e.preventDefault();
+        _removeActiveClassFromNavLinks();
+        e.currentTarget.classList.add('active');
+        _activeNavLinkKey = e.currentTarget.dataset.key;
+        props.handleSideNavLinkClick(filterType);
+    };
+
     const _createFilterTypeListElement = filterTypeArr => {
         const filterTypeListElement = document.createElement('ul');
 
@@ -30,11 +35,7 @@ export default function SideNavComponent(props) {
             linkElement.dataset.key = `filter-${filterType.getName()}`;
 
             linkElement.addEventListener('click', e => {
-                e.preventDefault();
-                _removeActiveClassFromNavLinks();
-                e.currentTarget.classList.add('active');
-                _activeNavLinkKey = e.currentTarget.dataset.key;
-                props.handleSideNavLinkClick(FilterTypeComponent(filterType));
+                _handleSideNavLinkClick(e, filterType);
             }, false);
 
             filterTypeListElement.appendChild(
