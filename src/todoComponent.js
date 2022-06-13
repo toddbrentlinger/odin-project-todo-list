@@ -1,16 +1,10 @@
-import ToDo from "./todo.js";
-import { ToDoProjectNew } from "./todoProject.js";
-import { Priority } from "./priorityLevel.js";
-import { Repeat } from "./repeatType.js";
 import CreateToDoComponent from "./createToDoComponent.js";
 import { createElement } from "./utilities.js";
-import ToDoLocalStorage from "./todoLocalStorage.js";
-import { parseISO } from "date-fns";
 
 import './todoComponent.scss';
 import FontAwesomeIcon from "./fontAwesomeIcon.js";
 
-export default function ToDoComponent(todo) {
+export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) {
     let _todoElement = null;
     let _detailsDropdownContainerElement = null;
     let _expandBtnElement = null;
@@ -26,58 +20,11 @@ export default function ToDoComponent(todo) {
     };
 
     const _handleEditToDoSubmit = e => {
-        console.log('ToDo edit form submitted!');
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-
-        // Update each property of ToDo
-
-        // Title
-        if (todo.getTitle() !== formProps.title) {
-            todo.setTitle(formProps.title);
-        }
-
-        // Description
-        if (todo.getDescription() !== formProps.description) {
-            todo.setDescription(formProps.description);
-        }
-
-        // Date
-        parseISO(formProps.date);
-
-        // Priority Level
-        const priorityLevel = Priority.getPriorityLevelByValue(+formProps.priority);
-        if (todo.getPriorityLevel().getValue() !== +formProps.priority) {
-            todo.setPriorityLevel(priorityLevel);
-        }
-
-        // Repeat
-        const repeatType = Repeat.getRepeatTypeByName(formProps.repeat);
-        if (todo.getRepeatType() !== repeatType) {
-            todo.setRepeatType(repeatType);
-        }
-
-        // Project
-        let project;
-        if (formProps.project === 'create-new-project' && formProps['project-new-title'].length > 0) {
-            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
-            //_refreshSideNavComponent();
-        } else {
-            project = ToDoProjectNew.getProjectByName(formProps.project);
-        }
-        if (todo.getProject() !== project) {
-            todo.setProject(project);
-        }
-
-        // Save ToDo to localStorage to update with existing values
-        ToDoLocalStorage.saveToDo(todo);
+        editToDoHandler(e, todo);
     };
 
     const _handleDeleteToDoBtnClick = e => {
-        console.log('ToDo delete button clicked!');
-        e.preventDefault();
+        deleteToDoHandler(e, todo);
     };
 
     const _handleEditToDoBtnClick = e => {

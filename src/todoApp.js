@@ -5,6 +5,15 @@ const ToDoApp = (function() {
     let _todoProjects = [];
     let _todos = [];
 
+    /**
+     * Returns false if project has ToDos assigned to it, else true for being empty.
+     * @param {ToDoProjectItem} todoProject
+     * @returns {Boolean} 
+     */
+    const _isProjectEmpty = todoProject => {
+        return !_todos.includes(todo => todo.getProject() === todoProject);
+    };
+
     return {
         getAllToDos: () => {
             return _todos;
@@ -14,6 +23,20 @@ const ToDoApp = (function() {
         },
         addToDo: (...newToDos) => {
             _todos.push(...newToDos);
+        },
+        removeToDo: (...todosToRemove) => {
+            let todoIndex;
+            todosToRemove.forEach(todoToRemove => {
+                todoIndex = _todos.indexOf(todoToRemove);
+                if (todoIndex > -1) {
+                    _todos.splice(todoIndex, 1);
+                    // If todo deleted is last in project, remove project
+                    const todoProject = todoToRemove.getProject();
+                    if (_isProjectEmpty(todoProject)) {
+                        ToDoProjectNew.removeProject(todoProject);
+                    }
+                }
+            });
         },
 
         // TODO: Remove/refactor methods below

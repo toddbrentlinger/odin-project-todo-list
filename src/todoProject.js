@@ -47,6 +47,12 @@ export const ToDoProjectNew = (function() {
 
             _projects.push(todoProjectItem);
         },
+        removeProject: todoProjectItem => {
+            const todoProjectIndex = _projects.indexOf(todoProjectItem);
+            if (todoProjectIndex > -1) {
+                _projects.splice(todoProjectIndex, 1);
+            }
+        },
         getProjectById: projectId => {
             return _projects.find(project => project.getId() === projectId);
         },

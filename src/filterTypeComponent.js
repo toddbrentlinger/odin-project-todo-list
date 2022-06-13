@@ -5,7 +5,7 @@ import { createElement } from "./utilities.js";
 
 /**
  * 
- * @param {FilterType} filterType
+ * @param {Object} props
  * @returns {Object}
  */
 export default function FilterTypeComponent(props = {}) {
@@ -47,7 +47,7 @@ export default function FilterTypeComponent(props = {}) {
                     createElement('div', {'class': 'todo-item-container'})
                 );
 
-                const todoElement = ToDoComponent(todo).render();
+                const todoElement = ToDoComponent(todo, props.deleteToDoHandler, props.editToDoHandler).render();
                 todoElement.style.animationDelay = `${index * 100}ms`;
                 todoElementContainer.appendChild(todoElement);
             });

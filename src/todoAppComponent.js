@@ -1,23 +1,25 @@
 import HeaderComponent from "./headerComponent.js";
 import SideNavComponent from "./sideNavComponent.js";
 import FooterComponent from "./footerComponent.js";
+import FilterTypeComponent from "./filterTypeComponent.js";
 
 import ToDo from "./todo.js";
+import { ToDoProjectNew } from "./todoProject.js";
 import { Priority } from "./priorityLevel.js";
 import { Repeat } from "./repeatType.js";
-
-import FilterTypeComponent from "./filterTypeComponent.js";
+import { Filter } from "./filterType.js";
 
 import ToDoApp from "./todoApp.js";
 import { parseISO } from "date-fns";
-import { ToDoProjectNew } from "./todoProject.js";
+
+import ToDoLocalStorage from "./todoLocalStorage.js";
 
 /**
  * 
  * @param {Element} contentElement 
  * @returns {Object}
  */
-const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
+const ToDoAppComponent = (function (contentElement) {
     const _createNewProjectSelectValue = 'create-new-project';
 
     const _refreshSideNavComponent = () => {
@@ -32,7 +34,7 @@ const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
     const _refreshMainComponent = () => {
         const newMainElement = _mainComponent.render();
 
-        // Refresh main element to display new component
+        // Replace main element to display new component
         _mainElement.replaceWith(newMainElement);
 
         _mainElement = newMainElement;
@@ -50,12 +52,9 @@ const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
             formProps['project-new-title'].length > 0
         ) {
             project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
-            // project = ToDoProject(formProps['project-new-title']);
-            // ToDoApp.addProject(project);
             _refreshSideNavComponent();
         } else {
             project = ToDoProjectNew.getProjectByName(formProps.project);
-            // project = ToDoApp.getProjectByName(formProps.project);
         }
 
         // Create ToDo instance
@@ -74,19 +73,94 @@ const ToDoAppComponent = (function ToDoAppComponent(contentElement) {
         _refreshMainComponent();
     };
 
+    const _handleEditToDoSubmit = (e, todo) => {
+        console.log('Handle Edit ToDo Submit inside ToDoAppComponent');
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
+
+        // Update each property of ToDo
+
+        // Title
+        if (todo.getTitle() !== formProps.title) {
+            todo.setTitle(formProps.title);
+        }
+
+        // Description
+        if (todo.getDescription() !== formProps.description) {
+            todo.setDescription(formProps.description);
+        }
+
+        // Date
+        if (todo.getDueDate() !== formProps.dueDate) {
+            todo.setDueDate(parseISO(formProps.date));
+        }
+
+        // Repeat
+        const repeatType = Repeat.getRepeatTypeByName(formProps.repeat);
+        if (todo.getRepeatType() !== repeatType) {
+            todo.setRepeatType(repeatType);
+        }
+        
+        // Priority Level
+        const priorityLevel = Priority.getPriorityLevelByValue(+formProps.priority);
+        if (todo.getPriorityLevel().getValue() !== +formProps.priority) {
+            todo.setPriorityLevel(priorityLevel);
+        }
+
+        // Project
+        let project;
+        if (formProps.project === 'create-new-project' && formProps['project-new-title'].length > 0) {
+            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
+            //_refreshSideNavComponent();
+        } else {
+            project = ToDoProjectNew.getProjectByName(formProps.project);
+        }
+        if (todo.getProject() !== project) {
+            todo.setProject(project);
+        }
+
+        // Save ToDo to localStorage to update with existing values
+        ToDoLocalStorage.saveToDo(todo);
+
+        _refreshMainComponent();
+    };
+
+    const _handleDeleteToDoClick = (e, todo) => {
+        console.log('Handle Delete ToDo Submit inside ToDoAppComponent');
+        e.preventDefault();
+
+        ToDoApp.removeToDo(todo);
+
+        ToDoLocalStorage.removeToDo(todo);
+
+        _refreshSideNavComponent();
+
+        _refreshMainComponent();
+    };
+
     const _handleSideNavLinkClick = filterType => {
-        _mainComponent = FilterTypeComponent({filterType});
+        _mainComponent = FilterTypeComponent({
+            filterType,
+            deleteToDoHandler: _handleDeleteToDoClick,
+            editToDoHandler: _handleEditToDoSubmit,
+        });
         _refreshMainComponent();
 
-        // Filter ToDo items using filterType callback
-        const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
+        // // Filter ToDo items using filterType callback
+        // const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
 
-        // Sort Filtered ToDo items by date
-        filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());
+        // // Sort Filtered ToDo items by date
+        // filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());
     };
 
     let _mainElement = null;
-    let _mainComponent = FilterTypeComponent(); // Default show ToDo's with due date of current date
+    let _mainComponent = FilterTypeComponent({
+        filterType: Filter.getFilterTypeByName('today'), // Default show ToDo's with due date of current date
+        deleteToDoHandler: _handleDeleteToDoClick,
+        editToDoHandler: _handleEditToDoSubmit,
+    });
     let _sideNavElement = null;
     let _sideNavcomponent = SideNavComponent({
         handleSideNavLinkClick: _handleSideNavLinkClick,
