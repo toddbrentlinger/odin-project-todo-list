@@ -103,7 +103,7 @@
                 transition: transform 300ms ease;
             }
 
-            &:hover, &:active, &:focus {
+            &:hover, &:active {
                 background-color: var(--base-black);
 
                 &::before {

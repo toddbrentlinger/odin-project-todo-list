@@ -1,6 +1,5 @@
 import ToDoApp from "./todoApp.js";
-import ToDoProject, { ToDoProjectNew } from "./todoProject.js";
-import ToDo from "./todo.js";
+import { ToDoProjectNew } from "./todoProject.js";
 import { Repeat } from "./repeatType.js";
 import { Priority } from "./priorityLevel.js";
 import { createElement } from "./utilities.js";

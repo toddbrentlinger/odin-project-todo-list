@@ -2,8 +2,8 @@ import ToDoApp from './todoApp.js';
 import ToDoProject, { ToDoProjectItem, ToDoProjectNew } from './todoProject.js';
 import ToDo from './todo.js';
 import { Priority } from './priorityLevel.js';
-import { Repeat } from './repeatType.js';
-import { Filter } from './filterType.js';
+import { Repeat, RepeatType } from './repeatType.js';
+import { Filter, FilterType } from './filterType.js';
 import ToDoLocalStorage from './todoLocalStorage.js';
 import { addDays, subDays } from 'date-fns';
 
@@ -50,9 +50,12 @@ import './style.scss';
     window.ToDoProjectNew = ToDoProjectNew;
     window.ToDo = ToDo;
     window.Priority = Priority;
+    window.Repeat = Repeat;
+    window.RepeatType = RepeatType;
     window.ToDoLocalStorage = ToDoLocalStorage;
     window.ToDoProjectComponent = ToDoProjectComponent;
     window.Filter = Filter;
+    window.FilterType = FilterType;
 
     //addSampleToDos();
 

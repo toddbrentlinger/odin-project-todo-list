@@ -50,6 +50,10 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
+6/12/22
+
+- Move functionality inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
+
 6/6/22
 
 - Add validator to create ToDo form to check if new project name already exists.
