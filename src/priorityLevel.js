@@ -1,31 +1,38 @@
 export function PriorityLevel(value, color) {
-    return {
-        getValue: () => value,
-        setValue: newVal => {
-            value = newVal;
-        },
-        getColor: () => color,
-        setColor: newColor => {
-            // Check if correct type
-            color = newColor;
-        },
-        toString: () => `Value: ${value} - Color: ${color}`,
-        toJSON: () => {
-            return {
-                value,
-                color,
-            };
-        },
-    };
+    this._value = value;
+    this._color = color;
 }
+
+PriorityLevel.prototype.getValue = function() {
+    return this._value;
+};
+PriorityLevel.prototype.setValue = function(newVal) {
+    this._value = newVal;
+};
+PriorityLevel.prototype.getColor = function() {
+    return this._color;
+};
+PriorityLevel.prototype.setColor = function(newColor) {
+    // Check if correct type
+    this._color = newColor;
+};
+PriorityLevel.prototype.toString = function() {
+    return `Value: ${this._value} - Color: ${this._color}`;
+};
+PriorityLevel.prototype.toJSON = function() {
+    return {
+        value: this._value,
+        color: this._color,
+    };
+};
 
 /** Module to handle different priority levels. */
 export const Priority = (function() {
     const _priorityLevelArr = [
-        PriorityLevel(0, 'white'),
-        PriorityLevel(1, 'yellow'),
-        PriorityLevel(2, 'orange'),
-        PriorityLevel(3, 'red')
+        new PriorityLevel(0, 'white'),
+        new PriorityLevel(1, 'yellow'),
+        new PriorityLevel(2, 'orange'),
+        new PriorityLevel(3, 'red')
     ];
 
     return {

@@ -1,21 +1,29 @@
 export function RepeatType(name) {
-    return {
-        getName: () => name,
-        setName: newName => {
-            name = newName;
-        },
-        toString: () => name,
-        toJSON: () => name,
-    };
+    this._name = name;
 }
+
+RepeatType.prototype.getName = function() {
+    return this._name;
+}
+RepeatType.prototype.setName = function(newName) {
+    if (typeof newName === 'string') {
+        this._name = newName;
+    }
+};
+RepeatType.prototype.toString = function() {
+    return this._name;
+}
+RepeatType.prototype.toJSON = function() {
+    return this._name;
+} 
 
 export const Repeat = (function() {
     const _repeatTypes = [
-        RepeatType('once'),
-        RepeatType('daily'),
-        RepeatType('weekly'),
-        RepeatType('monthly'),
-        RepeatType('yearly'),
+        new RepeatType('once'),
+        new RepeatType('daily'),
+        new RepeatType('weekly'),
+        new RepeatType('monthly'),
+        new RepeatType('yearly'),
     ];
 
     return {

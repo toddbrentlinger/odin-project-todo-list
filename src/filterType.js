@@ -1,20 +1,27 @@
 import { isThisWeek, isToday, isTomorrow, subDays } from "date-fns";
 
 export function FilterType(name, callback, headerName = 'default') {
-    return {
-        callback,
-        getName: () => name,
-        setName: newName => {
-            name = newName;
-        },
-        getHeaderName: () => headerName,
-        setHeaderName: newHeaderName => {
-            if (typeof newHeaderName !== 'string')
-                return;
-            headerName = newHeaderName;
-        },
-    };
+    this._name = name;
+    this._headerName = headerName;
+    this.callback = callback;
 }
+
+FilterType.prototype.getName = function() {
+    return this._name;
+};
+FilterType.prototype.setName = function(newName) {
+    if (typeof newName === 'string') {
+        this._name = newName;
+    }
+};
+FilterType.prototype.getHeaderName = function() {
+    return this._headerName;
+};
+FilterType.prototype.setHeaderName = function(newHeaderName) {
+    if (typeof newHeaderName === 'string') {
+        this._headerName = newHeaderName;
+    }
+};
 
 export const Filter = (function(){
     const _createFilterByProjectCallback = projectName => {
@@ -26,14 +33,14 @@ export const Filter = (function(){
     };
 
     const createFilterByProjectType = projectName => {
-        return FilterType(projectName, _createFilterByProjectCallback(projectName), 'project');
+        return new FilterType(projectName, _createFilterByProjectCallback(projectName), 'project');
     };
 
     let _filterTypes = [
-        FilterType('today', todo => isToday(todo.getDueDate())),
-        FilterType('tomorrow', todo => isTomorrow(todo.getDueDate())),
-        FilterType('this week', todo => isThisWeek(todo.getDueDate())),
-        FilterType('upcoming', todo => {
+        new FilterType('today', todo => isToday(todo.getDueDate())),
+        new FilterType('tomorrow', todo => isTomorrow(todo.getDueDate())),
+        new FilterType('this week', todo => isThisWeek(todo.getDueDate())),
+        new FilterType('upcoming', todo => {
             // Include two days before, and two days after, today
             return isThisWeek(
                 todo.getDueDate(), 
