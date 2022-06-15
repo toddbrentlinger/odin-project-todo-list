@@ -52,7 +52,10 @@ Filters:
 
 6/12/22
 
-- Move functionality inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
+- Instead of creating FilterType whenever new project is created, get all projects and create 
+SideNavLinks on every render.
+
+- Move functionality from inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
 
 6/6/22
 

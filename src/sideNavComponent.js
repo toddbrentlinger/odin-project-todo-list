@@ -8,7 +8,8 @@ import './sideNavComponent.scss';
  * @returns {Object}
  */
 export default function SideNavComponent(props) {
-    let _activeNavLinkKey = 'filter-today';
+    const _defaultNavLinkKey = 'filter-today';
+    let _activeNavLinkKey = _defaultNavLinkKey;
     let _sideNavElement = null;
 
     const _removeActiveClassFromNavLinks = () => {
@@ -80,9 +81,18 @@ export default function SideNavComponent(props) {
             };
 
             // Add class to active nav link
-            const activeNavLink = _sideNavElement.querySelector(`[data-key=${_activeNavLinkKey}`);
+            let activeNavLink = _sideNavElement.querySelector(`[data-key=${_activeNavLinkKey}`);
             if (activeNavLink) {
                 activeNavLink.classList.add('active');
+            } else {
+                // If activeNavLink NOT found, use default nav link key
+                activeNavLink = _sideNavElement.querySelector(`[data-key=${_defaultNavLinkKey}`);
+                if (activeNavLink) {
+                    _removeActiveClassFromNavLinks();
+                    activeNavLink.classList.add('active'); 
+                    _activeNavLinkKey = _defaultNavLinkKey;
+                    props.handleSideNavLinkClick();
+                }
             }
 
             return _sideNavElement;

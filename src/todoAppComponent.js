@@ -140,7 +140,7 @@ const ToDoAppComponent = (function (contentElement) {
         _refreshMainComponent();
     };
 
-    const _handleSideNavLinkClick = filterType => {
+    const _handleSideNavLinkClick = (filterType = Filter.getFilterTypeByName('today')) => {
         _mainComponent = FilterTypeComponent({
             filterType,
             deleteToDoHandler: _handleDeleteToDoClick,

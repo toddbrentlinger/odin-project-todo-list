@@ -27,6 +27,18 @@ export const ToDoProjectNew = (function() {
         return _projects.find(project => project.getName().toLowerCase() === projectName.toLowerCase());
     };
 
+    /**
+     * Add new FilterType for corresponding project
+     * @param {ToDoProjectItem} todoProject 
+     */
+    const _addFilterTypeOfProject = todoProject => {
+        Filter.addFilterType(Filter.createFilterByProjectType(todoProject.getName()));
+    };
+
+    const _removeFilterTypeOfProject = todoProject => {
+        Filter.removeFilterType(Filter.getFilterTypeByName(todoProject.getName()));
+    };
+
     return {
         getProjectByName,
         getAllProjects: () => _projects,
@@ -38,10 +50,11 @@ export const ToDoProjectNew = (function() {
             }
             const projectItem = ToDoProjectItem(projectName);
             _projects.push(projectItem);
-            // Add new FilterType for corresponding project
-            Filter.addFilterType(Filter.createFilterByProjectType(projectName));
+            _addFilterTypeOfProject(projectItem);
             return projectItem;
         },
+        // TODO: Add _addFilterTypeOfProject and/or call inside addProjectName() since functionality is identical after ToDoProject
+        // is found.
         addProject: todoProjectItem => {
             // Check if project name already exists
 
@@ -51,6 +64,7 @@ export const ToDoProjectNew = (function() {
             const todoProjectIndex = _projects.indexOf(todoProjectItem);
             if (todoProjectIndex > -1) {
                 _projects.splice(todoProjectIndex, 1);
+                _removeFilterTypeOfProject(todoProjectItem);
             }
         },
         getProjectById: projectId => {

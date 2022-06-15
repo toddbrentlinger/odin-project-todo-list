@@ -75,7 +75,7 @@ export const Filter = (function(){
             }
         },
         removeFilterType: filterTypeToRemove => {
-            const index = _filterTypes.findIndex(filterTypeToRemove);
+            const index = _filterTypes.findIndex(filterType => filterType === filterTypeToRemove);
             if (index > -1) {
                 return _filterTypes.splice(index, 1);
             }
