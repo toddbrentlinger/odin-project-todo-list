@@ -1,0 +1,43 @@
+.confirm-modal-container {
+    // Background
+    background-color: hsla(0, 0%, 50%, 0.5);
+    // Position
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    // Grid
+    display: grid;
+    place-items: center;
+
+    .confirm-modal {
+        padding: 2rem;
+        // Background
+        background-color: var(--base-white);
+        // Animation
+        animation-name: expand;
+        animation-duration: 500ms;
+        animation-timing-function: ease;
+        animation-fill-mode: both;
+
+        @keyframes expand {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .confirm-modal-question {
+            margin-bottom: 1em;
+        }
+        .confirm-modal-btn-container {
+            // Grid
+            display: grid;
+            grid-auto-flow: column;
+            gap: 1em;
+        }
+    }
+}

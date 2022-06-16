@@ -1,4 +1,5 @@
 import CreateToDoComponent from "./createToDoComponent.js";
+import ConfirmComponent from "./confirmComponent.js";
 import { createElement } from "./utilities.js";
 
 import './todoComponent.scss';
@@ -23,8 +24,22 @@ export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) 
         editToDoHandler(e, todo);
     };
 
-    const _handleDeleteToDoBtnClick = e => {
+    const _handleDeleteToDoConfirm = e => {
         deleteToDoHandler(e, todo);
+    };
+
+    const _handleDeleteToDoCancel = e => {
+
+    };
+
+    const _handleDeleteToDoBtnClick = e => {
+        document.getElementById('content').appendChild(
+            ConfirmComponent(
+                'Are you sure you want to delete the ToDo?',
+                _handleDeleteToDoConfirm,
+                _handleDeleteToDoCancel
+            ).render()
+        );
     };
 
     const _handleEditToDoBtnClick = e => {
@@ -91,7 +106,7 @@ export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) 
 
         // Btn - Delete
         const deleteBtn = btnContainer.appendChild(
-            createElement('button', {'class': 'todo-btn-delete'}, 
+            createElement('button', {'class': 'todo-btn-delete custom-btn'}, 
                 createElement('i', {'class': 'fas fa-trash-alt'}),
                 createElement('span', {}, 'Delete')
             )
@@ -100,7 +115,7 @@ export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) 
 
         // Btn - Edit
         const editBtn = btnContainer.appendChild(
-            createElement('button', {'class': 'todo-btn-edit'}, 
+            createElement('button', {'class': 'todo-btn-edit custom-btn'}, 
                 createElement('i', {'class': 'fas fa-edit'}), 
                 createElement('span', {}, 'Edit')
             )
