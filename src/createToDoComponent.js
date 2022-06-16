@@ -271,8 +271,8 @@ export default function CreateToDoComponent(props) {
 
             createToDoForm.appendChild(
                 createElement('div', {id: 'create-todo-btns'}, 
-                    createElement('button', {type: 'reset'}, 'Reset'),
-                    createElement('button', {type: 'submit'}, props.submitBtnText || 'Add')
+                    createElement('button', {type: 'reset', 'class': 'custom-btn'}, 'Reset'),
+                    createElement('button', {type: 'submit', 'class': 'custom-btn'}, props.submitBtnText || 'Add')
                 )
             );
 

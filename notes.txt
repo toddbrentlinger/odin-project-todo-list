@@ -50,10 +50,30 @@ Filters:
           with current day in third position. Last two previous days are shown by default.
         - Can slide the calendar left or right to display tabs for days earlier or later.
 
-6/12/22
+What would I do different?
 
-- Instead of creating FilterType whenever new project is created, get all projects and create 
+- Didn't spend enough time initially to work out different objects and their relationships before even 
+starting to code. Decided midway to frame custom DOM component objects like basic React Components, even 
+trying to incorporate a single props object being passed as an argument rather than passing individual
+properties used by the component.
+
+6/15/22
+
+- ISSUE: Deleting any ToDo will remove the project from the SideNav
+
+6/14/22
+
+- Add completed checkmark functionality. Should save completed and deleted ToDos for a limited time?
+
+X Add confirmation modal when click delete on ToDo.
+
+- Create DOMComponent abstract class with element property, render() method, and refresh() method.
+Extend this class in each <NAME>Component object. 
+
+X Instead of creating FilterType whenever new project is created, get all projects and create 
 SideNavLinks on every render.
+
+6/12/22
 
 - Move functionality from inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
 

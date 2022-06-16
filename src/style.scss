@@ -16,7 +16,6 @@ html {
 }
 
 body {
-    outline: 2px solid black;
     font-size: 1.6rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
@@ -40,7 +39,7 @@ body {
     }
 
     header {
-        outline: 2px solid red;
+        outline: 2px solid var(--base-black);
         // Grid
         grid-area: header;
         
@@ -61,7 +60,7 @@ body {
     }
 
     #sidenav {
-        outline: 2px solid green;
+        outline: 2px solid var(--base-black);
         // Grid
         grid-area: sidenav;
         // Position
@@ -73,7 +72,7 @@ body {
     }
 
     main {
-        outline: 2px solid blue;
+        outline: 2px solid var(--base-black);
         // Grid
         grid-area: main;
         display: grid;
@@ -86,7 +85,7 @@ body {
     }
 
     footer {
-        outline: 2px solid orange;
+        outline: 2px solid var(--base-black);
         font-size: 1.2rem;
         text-align: center;
         // Grid
@@ -100,6 +99,17 @@ body {
     // Grid
     display: grid;
     row-gap: 1.6rem;
+}
+
+.custom-btn {
+    padding: 0.5em 1em;
+    border: 2px solid var(--base-black);
+    cursor: pointer;
+
+    &:hover, &:active {
+        background-color: var(--base-black);
+        color: var(--base-white);
+    }
 }
 
 button {
