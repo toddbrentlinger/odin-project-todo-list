@@ -3,6 +3,9 @@
     --checkbox-size: 1.6rem;
     --chevron-bar-width: 50%;
     --circle-button-width: 90%;
+    --checkmark-width: 120%;
+    --checkmark-height: 170%;
+    --checkmark-thickness: 0.4rem;
 }
 
 .todo-item-container {
@@ -46,6 +49,7 @@
 
         .todo-checkbox-container {
             outline: 2px solid var(--base-black);
+            cursor: pointer;
             // Grid
             grid-area: checkbox;
             display: grid;
@@ -56,9 +60,59 @@
                 content: "";
                 width: var(--checkbox-size);
                 height: var(--checkbox-size);
-                border: 2px solid black;
+                border: 2px solid var(--base-black);
                 border-radius: 50%;
-                cursor: pointer;
+                cursor: inherit;
+
+                // &::before, &::after {
+
+                // }
+            }
+
+            &:hover {
+                .todo-checkbox {
+                    position: relative;
+
+                    &::before, &::after {
+                        content: '';
+                        position: absolute;
+                        width: var(--checkmark-width);
+                        height: var(--checkmark-height);
+                        // Border
+                        border-style: solid;
+                        border-bottom-left-radius: 20%;
+                        border-top-right-radius: 20%;
+                        // Transform
+                        transform: translateY(-40%) rotate(35deg);
+                    }
+
+                    &::before {
+                        top: calc(((100% - var(--checkmark-height)) * 0.5) + (var(--checkmark-thickness) * 0.40));
+                        left: calc(((100% - var(--checkmark-height)) * 0.5) + (var(--checkmark-thickness) * 0.40));
+                        // Border
+                        border-top-width: 0;
+                        border-left-width: 0;
+                        border-right-width: calc(var(--checkmark-thickness) * 1.5);
+                        border-bottom-width: calc(var(--checkmark-thickness) * 1.5);
+                        border-color: var(--base-white);
+                    }
+
+                    &::after {
+                        top: calc((100% - var(--checkmark-height)) * 0.5);
+                        left: calc((100% - var(--checkmark-width)) * 0.5);
+                        // Border
+                        border-width: 0 var(--checkmark-thickness) var(--checkmark-thickness) 0;
+                        border-color: gray;
+                    }
+                }
+            }
+
+            &:active {
+                .todo-checkbox {
+                    &::after {
+                        border-color: var(--base-black);
+                    }
+                }
             }
         }
     

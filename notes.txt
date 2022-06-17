@@ -57,9 +57,22 @@ starting to code. Decided midway to frame custom DOM component objects like basi
 trying to incorporate a single props object being passed as an argument rather than passing individual
 properties used by the component.
 
+To-Do List:
+
+- Save deleted and completed ToDos that are removed after a certain period of time OR when localStorage
+is full. If localStorage is full, remove deleted ToDos before starting to remove completed ToDos.
+    - Should nearly maximum age completed ToDo have priority over single deleted ToDo in history?
+    - Display list of completed ToDos.
+        - Button to clear all completed ToDos from storage/history.
+        - Button to clear individual ToDo from storage/history.
+    - Display list of deleted ToDos. (inherit functionality from display completed ToDos)
+        - Button to 'restore' ToDo
+        - Button to clear all deleted ToDos from storage/history.
+        - Button to clear individual ToDo from stroage/history.
+
 6/15/22
 
-- ISSUE: Deleting any ToDo will remove the project from the SideNav
+X ISSUE: Deleting any ToDo will remove the project from the SideNav
 
 6/14/22
 
@@ -75,11 +88,11 @@ SideNavLinks on every render.
 
 6/12/22
 
-- Move functionality from inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
+X Move functionality from inside ToDo that uses ToDoLocalStroge to update storage into ToDoApp.addToDo method.
 
 6/6/22
 
-- Add validator to create ToDo form to check if new project name already exists.
+X Add validator to create ToDo form to check if new project name already exists.
 
 - ISSUE: Resetting form with New Project Name input enabled does NOT hide the element
 and set disabled to true. 
@@ -97,7 +110,7 @@ X Combine functionality of FilterTypeComponent and ToDoProjectComponent?
 
 5-30-22
 
-- Use same createToDoComponent when adding a ToDo from Project page AND editing existing ToDo
+X Use same createToDoComponent when adding a ToDo from Project page AND editing existing ToDo
 by passing in object with different key/values to change certain values or methods inside 
 componnent.
     - Quick ToDo
