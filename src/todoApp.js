@@ -11,7 +11,7 @@ const ToDoApp = (function() {
      * @returns {Boolean} 
      */
     const _isProjectEmpty = todoProject => {
-        return !_todos.includes(todo => todo.getProject() === todoProject);
+        return !_todos.some(todo => todo.getProject() === todoProject);
     };
 
     return {
