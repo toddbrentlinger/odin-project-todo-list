@@ -60,6 +60,10 @@ export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) 
         );
     };
 
+    const _handleToDoCheckmarkClick = e => {
+        deleteToDoHandler(e, todo);
+    };
+
     const _createToDoDropdownElement = () => {
         _detailsDropdownContainerElement = createElement('div', {'class': 'todo-item-details-container'});
 
@@ -167,7 +171,7 @@ export default function ToDoComponent(todo, deleteToDoHandler, editToDoHandler) 
                 createElement('div', {'class': 'todo-checkbox-container'}, 
                     createElement('button', {'class': 'todo-checkbox', 'aria-label': 'Check this box if ToDo has been completed.'})
                 )
-            );
+            ).addEventListener('click', _handleToDoCheckmarkClick, false);
 
             // Title
             const title = headerElement.appendChild(
