@@ -30,11 +30,17 @@ const ToDoLocalStorage = (function(){
     };
 
     const _getAllToDosAsJSON = () => {
-        return Object.entries(localStorage).map(entry => {
-            const id = entry[0];
-            const parsedJSON = JSON.parse(entry[1]);
-            return parsedJSON;
+        let todos = [];
+
+        Object.entries(localStorage).forEach(entry => {
+            if (!entry[0].startsWith('todo-')) {
+                return;
+            }
+            //const id = entry[0].match(/(?<=todo-).+/i)[0];
+            todos.push(JSON.parse(entry[1]));
         });
+
+        return todos;
     };
 
     return {
@@ -71,7 +77,7 @@ const ToDoLocalStorage = (function(){
          */
         saveToDo: todo => {
             try {
-                localStorage.setItem(todo.getId(), JSON.stringify(todo));
+                localStorage.setItem(`todo-${todo.getId()}`, JSON.stringify(todo));
             } catch (e) {
                 if (e.name === 'QuotaExceededError') {
                     alert('Local storage quota exceeded!');
