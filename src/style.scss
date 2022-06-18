@@ -26,6 +26,8 @@ body {
     min-height: 100vh;
     max-width: 1000px;
     margin: 0 auto;
+    border-left: 2px solid var(--base-black);
+    border-right: 2px solid var(--base-black);
     // Grid
     display: grid;
     grid-template-columns: auto 1fr;
@@ -40,7 +42,7 @@ body {
     }
 
     header {
-        outline: 2px solid var(--base-black);
+        border-bottom: 2px solid var(--base-black);
         // Grid
         grid-area: header;
         
@@ -61,16 +63,10 @@ body {
     }
 
     #sidenav {
-        outline: 2px solid var(--base-black);
+        border: none;
         background-color: var(--base-white);
         // Grid
         grid-area: sidenav;
-        // Position
-        // position: fixed;
-        // top: 0;
-        // left: -50%;
-        // bottom: 0;
-        // width: 50%;
 
         z-index: 1;
         overflow-x: hidden;
@@ -89,6 +85,7 @@ body {
 
         &.open {
             width: auto;
+            border-right: 2px solid var(--base-black);
 
             #sidenav-content {
                 
@@ -97,7 +94,6 @@ body {
     }
 
     main {
-        outline: 2px solid var(--base-black);
         // Grid
         grid-area: main;
         display: grid;
@@ -110,7 +106,7 @@ body {
     }
 
     footer {
-        outline: 2px solid var(--base-black);
+        border-top: 2px solid var(--base-black);
         font-size: 1.2rem;
         text-align: center;
         // Grid
@@ -155,9 +151,9 @@ button {
             "footer footer";
         
         #sidenav {
-            // Position
             position: static;
             width: auto;
+            border-right: 2px solid var(--base-black);
 
             &.open {
 
