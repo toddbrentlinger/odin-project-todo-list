@@ -28,10 +28,13 @@ export default function HeaderComponent(props) {
         render: () => {
             const headerComponent = document.createElement('header');
 
+            const topNavLogo = createElement('div', {id: 'topnav-logo'}, 
+                createElement('img', {src: ToDoIcon, alt: 'ToDo icon'})
+            );
+            topNavLogo.addEventListener('click', props.handleHeaderLogoClick, false);
+
             headerComponent.appendChild(createElement('nav', {id: 'topnav'}, 
-                createElement('div', {id: 'topnav-logo'}, 
-                    createElement('img', {src: ToDoIcon, alt: 'ToDo icon'})
-                ),
+                topNavLogo,
                 createElement('h1', {}, 'ToDo List'),
                 _createQuickAddToDo()
             ));

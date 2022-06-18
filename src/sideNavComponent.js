@@ -51,6 +51,10 @@ export default function SideNavComponent(props) {
         render: () => {
             _sideNavElement = createElement('nav', {id: 'sidenav'});
 
+            const sideNavContent = _sideNavElement.appendChild(
+                createElement('div', {id: 'sidenav-content'})
+            );
+
             // Sort FilterTypes into groups with same filter group name
             // Key is filter group name and value is array of corresponding FilterTypes
             const filterTypeObj = {};
@@ -65,7 +69,7 @@ export default function SideNavComponent(props) {
             });
             
             // Default options (ex. Today, Tomorrow, etc.)
-            _sideNavElement.appendChild(
+            sideNavContent.appendChild(
                 _createFilterTypeListElement(filterTypeObj['default'])
             );
             
@@ -73,7 +77,7 @@ export default function SideNavComponent(props) {
             for (const [headerName, filterTypeArr] of Object.entries(filterTypeObj)) {
                 if (headerName === 'default')
                     continue;
-                _sideNavElement.append(
+                    sideNavContent.append(
                     document.createElement('hr'),
                     createElement('h3', {}, headerName),
                     _createFilterTypeListElement(filterTypeArr)
@@ -81,12 +85,12 @@ export default function SideNavComponent(props) {
             };
 
             // Add class to active nav link
-            let activeNavLink = _sideNavElement.querySelector(`[data-key=${_activeNavLinkKey}`);
+            let activeNavLink = sideNavContent.querySelector(`[data-key=${_activeNavLinkKey}`);
             if (activeNavLink) {
                 activeNavLink.classList.add('active');
             } else {
                 // If activeNavLink NOT found, use default nav link key
-                activeNavLink = _sideNavElement.querySelector(`[data-key=${_defaultNavLinkKey}`);
+                activeNavLink = sideNavContent.querySelector(`[data-key=${_defaultNavLinkKey}`);
                 if (activeNavLink) {
                     _removeActiveClassFromNavLinks();
                     activeNavLink.classList.add('active'); 

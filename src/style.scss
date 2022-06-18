@@ -35,7 +35,7 @@ body {
         "main main"
         "footer footer";
 
-    > * {
+    > *:not(#sidenav) {
         padding: 1.6rem;
     }
 
@@ -62,14 +62,38 @@ body {
 
     #sidenav {
         outline: 2px solid var(--base-black);
+        background-color: var(--base-white);
         // Grid
         grid-area: sidenav;
         // Position
-        position: fixed;
+        // position: fixed;
+        // top: 0;
+        // left: -50%;
+        // bottom: 0;
+        // width: 50%;
+
+        z-index: 1;
+        overflow-x: hidden;
+        // Position
+        position: absolute;
+        height: 100%;
+        width: 0;
         top: 0;
-        left: -50%;
-        bottom: 0;
-        width: 50%;
+        left: 0;
+        // Transition
+        transition: all 500ms ease;
+
+        #sidenav-content {
+
+        }
+
+        &.open {
+            width: auto;
+
+            #sidenav-content {
+                
+            }
+        }
     }
 
     main {
@@ -129,11 +153,19 @@ button {
             "header header"
             "sidenav main"
             "footer footer";
-
+        
         #sidenav {
             // Position
             position: static;
             width: auto;
+
+            &.open {
+
+            }
+
+            #sidenav-content {
+
+            }
         }
     }
 }

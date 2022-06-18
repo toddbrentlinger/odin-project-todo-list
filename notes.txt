@@ -72,6 +72,12 @@ is full. If localStorage is full, remove deleted ToDos before starting to remove
 
 6/15/22
 
+X ISSUE: Getting ToDo from localStorage causes issues if each property is not ToDo.
+SOLUTION: Either save all ToDo info inside single property or apply some check if property 
+is a ToDo.
+
+X Add functionality to slide out the sidenav when user clicks the logo on the header.
+
 X ISSUE: Deleting any ToDo will remove the project from the SideNav
 
 6/14/22

@@ -147,12 +147,13 @@ const ToDoAppComponent = (function (contentElement) {
             editToDoHandler: _handleEditToDoSubmit,
         });
         _refreshMainComponent();
+        _sideNavElement.classList.remove('open');
+    };
 
-        // // Filter ToDo items using filterType callback
-        // const filteredToDos = ToDoApp.getAllToDos().filter(filterType.callback);
+    const _handleHeaderLogoClick = e => {
+        if (!_sideNavElement) return;
 
-        // // Sort Filtered ToDo items by date
-        // filteredToDos.sort((a,b) => a.getDueDate() - b.getDueDate());
+        _sideNavElement.classList.toggle('open');
     };
 
     let _mainElement = null;
@@ -177,6 +178,7 @@ const ToDoAppComponent = (function (contentElement) {
             contentElement.appendChild(HeaderComponent({
                 handleQuickAddToDoSubmit: _handleQuickAddToDoFormSubmit,
                 createNewProjectSelectValue: _createNewProjectSelectValue,
+                handleHeaderLogoClick: _handleHeaderLogoClick,
             }).render());
 
             // Sidenav
