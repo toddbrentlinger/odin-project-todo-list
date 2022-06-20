@@ -70,6 +70,11 @@ is full. If localStorage is full, remove deleted ToDos before starting to remove
         - Button to clear all deleted ToDos from storage/history.
         - Button to clear individual ToDo from stroage/history.
 
+6/18/22
+
+X ISSUE: Edit/create ToDo form z-index below sidenav z-index so sidenav is not blurred in background.
+SOLUTION: Increase z-index for edit/create ToDo form.
+
 6/15/22
 
 X ISSUE: Getting ToDo from localStorage causes issues if each property is not ToDo.
