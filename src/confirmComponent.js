@@ -1,7 +1,6 @@
 import { createElement } from "./utilities.js";
 
 import './confirmComponent.scss';
-import { __esModule } from "uuid";
 
 /**
  * Factory function to create DOM components that asks a question and calls a specific callback function for 'yes' or 'no'.

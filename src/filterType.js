@@ -1,4 +1,4 @@
-import { isThisWeek, isToday, isTomorrow, subDays } from "date-fns";
+import { addDays, endOfWeek, startOfWeek, subDays } from "date-fns";
 
 export function FilterType(name, callback, headerName = 'default') {
     this._name = name;
@@ -25,7 +25,7 @@ FilterType.prototype.setHeaderName = function(newHeaderName) {
 
 export const Filter = (function(){
     const _createFilterByProjectCallback = projectName => {
-        return todo => {
+        return (todo) => {
             const project = todo.getProject();
             if (!project) return false;
             return project.getName() === projectName;
@@ -37,15 +37,17 @@ export const Filter = (function(){
     };
 
     let _filterTypes = [
-        new FilterType('today', todo => isToday(todo.getDueDate())),
-        new FilterType('tomorrow', todo => isTomorrow(todo.getDueDate())),
-        new FilterType('this week', todo => isThisWeek(todo.getDueDate())),
-        new FilterType('upcoming', todo => {
-            // Include two days before, and two days after, today
-            return isThisWeek(
-                todo.getDueDate(), 
-                {weekStartsOn: subDays(Date.now(), 2).getDay()}
-            );
+        new FilterType('today', (todo) => {
+            return todo.getRepeatType().checkDate(todo.getDueDate(), new Date());
+        }),
+        new FilterType('tomorrow', (todo) => {
+            return todo.getRepeatType().checkDate(todo.getDueDate(), addDays(new Date(), 1));
+        }),
+        new FilterType('this week', (todo) => {
+            return todo.getRepeatType().checkDate(todo.getDueDate(), startOfWeek(new Date()), endOfWeek(new Date()));
+        }),
+        new FilterType('upcoming', (todo) => {
+            return todo.getRepeatType().checkDate(todo.getDueDate(), subDays(new Date(), 2), addDays(new Date(), 2));
         }),
         createFilterByProjectType('default'),
     ];

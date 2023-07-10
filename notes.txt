@@ -70,6 +70,45 @@ is full. If localStorage is full, remove deleted ToDos before starting to remove
         - Button to clear all deleted ToDos from storage/history.
         - Button to clear individual ToDo from stroage/history.
 
+-------------------------------------------------------------------------------
+
+7/9/23
+
+- ToDo form validation for Repeat value. If 'Monthly' repeat is chosen, date must be between 1-28 
+of month since not every month has 29-31 day values.
+
+- Add method to ToDo that accepts a callback function and returns true if ToDo occurs on the date 
+that accounts for Repeat type.
+ISSUE: If add new RepeatType, must account for it in each existing FilterType and vice versa,
+if add new FilterType, must account for it in each existing RepeatType.
+SOLUTION: Include a callback function when creating RepeatType that accepts todo, startDate, and endDate(optional)
+and returns true if todo.dueDate, accounted for RepeatType, is within startDate and endDate.
+
+ToDo - Date: Sunday 7/9/23
+Filters: Today, Tomorrow, This Week, Upcoming (2 days before and after today)
+
+Repeat: Once
+All Filters: Pass ToDo.dueDate into corresponding date-fns. isToday, isTomorrow, isThisWeek
+
+Repeat: Daily
+All Filters: Return true if current date is past ToDo.dueDate
+
+Repeat: Weekly
+Today: Return true if day of week of current date is the same as ToDo.dueDate
+Tomorrow: Return true if day of week of tomorrow is the same as ToDo.dueDate
+This Week: Return true 
+Upcoming: Return true if day of week of 2 days before/after current date is the same as ToDo.dueDate
+
+Repeat: Monthly
+Today: Return true if day of month of current date is the same as ToDo.dueDate
+Tomorrow: Return true if day of month of tomorrow is the same as ToDo.dueDate
+This Week: 
+Upcoming: Return true if day of month of 2 days before/after current date is same as ToDo.dueDate 
+
+Filter Type
+Daily: If daily, return true if current date is after ToDo.date
+
+
 6/18/22
 
 X ISSUE: Edit/create ToDo form z-index below sidenav z-index so sidenav is not blurred in background.
