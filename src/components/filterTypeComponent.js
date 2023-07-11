@@ -1,7 +1,7 @@
-import ToDoApp from "./todoApp.js";
-import { Filter } from "./filterType.js";
+import ToDoApp from "../todoApp.js";
+import { Filter } from "../filterType.js";
 import ToDoComponent from "./todoComponent.js";
-import { createElement } from "./utilities.js";
+import { createElement } from "../utilities.js";
 
 /**
  * 

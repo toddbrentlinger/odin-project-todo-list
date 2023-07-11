@@ -3,16 +3,16 @@ import SideNavComponent from "./sideNavComponent.js";
 import FooterComponent from "./footerComponent.js";
 import FilterTypeComponent from "./filterTypeComponent.js";
 
-import ToDo from "./todo.js";
-import { ToDoProjectNew } from "./todoProject.js";
-import { Priority } from "./priorityLevel.js";
-import { Repeat } from "./repeatType.js";
-import { Filter } from "./filterType.js";
+import ToDo from "../todo.js";
+import { ToDoProjectNew } from "../todoProject.js";
+import { Priority } from "../priorityLevel.js";
+import { Repeat } from "../repeatType.js";
+import { Filter } from "../filterType.js";
 
-import ToDoApp from "./todoApp.js";
+import ToDoApp from "../todoApp.js";
 import { parseISO } from "date-fns";
 
-import ToDoLocalStorage from "./todoLocalStorage.js";
+import ToDoLocalStorage from "../todoLocalStorage.js";
 
 /**
  * 

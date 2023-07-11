@@ -1,6 +1,6 @@
 import CreateToDoComponent from "./createToDoComponent.js";
 import ConfirmComponent from "./confirmComponent.js";
-import { createElement } from "./utilities.js";
+import { createElement } from "../utilities.js";
 
 import './todoComponent.scss';
 import FontAwesomeIcon from "./fontAwesomeIcon.js";

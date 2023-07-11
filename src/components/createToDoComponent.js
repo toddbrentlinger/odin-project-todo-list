@@ -1,8 +1,8 @@
-import ToDoApp from "./todoApp.js";
-import { ToDoProjectNew } from "./todoProject.js";
-import { Repeat } from "./repeatType.js";
-import { Priority } from "./priorityLevel.js";
-import { createElement } from "./utilities.js";
+import ToDoApp from "../todoApp.js";
+import { ToDoProjectNew } from "../todoProject.js";
+import { Repeat } from "../repeatType.js";
+import { Priority } from "../priorityLevel.js";
+import { createElement } from "../utilities.js";
 import './createToDoComponent.scss';
 
 /**

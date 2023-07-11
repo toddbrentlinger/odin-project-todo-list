@@ -13,7 +13,7 @@
 }
 
 .todo-item {
-    border: 2px solid var(--base-black);
+    border: 3px solid var(--base-black);
     line-height: var(--header-line-height);
     // Position
     position: relative;
@@ -48,7 +48,7 @@
         align-items: center;
 
         .todo-checkbox-container {
-            outline: 2px solid var(--base-black);
+            outline: 3px solid var(--base-black);
             cursor: pointer;
             // Grid
             grid-area: checkbox;

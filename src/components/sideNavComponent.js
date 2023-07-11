@@ -1,5 +1,5 @@
-import { Filter } from "./filterType.js";
-import { createElement } from "./utilities.js";
+import { Filter } from "../filterType.js";
+import { createElement } from "../utilities.js";
 import './sideNavComponent.scss';
 
 /**
