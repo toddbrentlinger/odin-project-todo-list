@@ -1,5 +1,5 @@
 import ToDoApp from "../todoApp.js";
-import { ToDoProjectNew } from "../todoProject.js";
+import ToDoProject from "../todoProject.js";
 import { Repeat } from "../repeatType.js";
 import { Priority } from "../priorityLevel.js";
 import { createElement } from "../utilities.js";
@@ -250,7 +250,7 @@ export default function CreateToDoComponent(props) {
             });
 
             _createNewProjectInputElement.addEventListener('input', e => {
-                if (ToDoProjectNew.getProjectByName(_createNewProjectInputElement.value)) {
+                if (ToDoProject.getProjectByName(_createNewProjectInputElement.value)) {
                     _createNewProjectInputElement.setCustomValidity('Project name already exists!');
                     _createNewProjectInputElement.reportValidity();
                 } else {

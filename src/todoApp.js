@@ -1,4 +1,4 @@
-import { ToDoProjectNew } from "./todoProject.js";
+import ToDoProject from "./todoProject.js";
 
 /** Module for ToDo application logic */
 const ToDoApp = (function() {
@@ -19,7 +19,7 @@ const ToDoApp = (function() {
             return _todos;
         },
         getAllProjects: () => {
-            return ToDoProjectNew.getAllProjects();
+            return ToDoProject.getAllProjects();
         },
         addToDo: (...newToDos) => {
             _todos.push(...newToDos);
@@ -33,7 +33,7 @@ const ToDoApp = (function() {
                     // If todo deleted is last in project, remove project
                     const todoProject = todoToRemove.getProject();
                     if (_isProjectEmpty(todoProject)) {
-                        ToDoProjectNew.removeProject(todoProject);
+                        ToDoProject.removeProject(todoProject);
                     }
                 }
             });

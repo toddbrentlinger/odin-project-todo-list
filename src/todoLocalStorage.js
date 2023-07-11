@@ -1,7 +1,7 @@
 import ToDo from "./todo";
 import { Repeat } from "./repeatType.js";
 import { Priority } from "./priorityLevel.js";
-import { ToDoProjectNew } from "./todoProject.js";
+import ToDoProject from "./todoProject.js";
 
 /** Module to save ToDo objects to localStorage. */
 const ToDoLocalStorage = (function(){
@@ -14,8 +14,8 @@ const ToDoLocalStorage = (function(){
             || Repeat.addRepeatType(RepeatType(jsonObj.repeat))
             || undefined;
         
-        const project = ToDoProjectNew.getProjectByName(jsonObj.project)
-            || ToDoProjectNew.addProjectName(jsonObj.project) 
+        const project = ToDoProject.getProjectByName(jsonObj.project)
+            || ToDoProject.addProjectName(jsonObj.project) 
             || undefined;
             
         return ToDo(

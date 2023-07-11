@@ -4,7 +4,7 @@ import FooterComponent from "./footerComponent.js";
 import FilterTypeComponent from "./filterTypeComponent.js";
 
 import ToDo from "../todo.js";
-import { ToDoProjectNew } from "../todoProject.js";
+import ToDoProject from "../todoProject.js";
 import { Priority } from "../priorityLevel.js";
 import { Repeat } from "../repeatType.js";
 import { Filter } from "../filterType.js";
@@ -51,10 +51,10 @@ const ToDoAppComponent = (function (contentElement) {
         if (formProps.project === _createNewProjectSelectValue && 
             formProps['project-new-title'].length > 0
         ) {
-            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
+            project = ToDoProject.addProjectName(formProps['project-new-title']);
             _refreshSideNavComponent();
         } else {
-            project = ToDoProjectNew.getProjectByName(formProps.project);
+            project = ToDoProject.getProjectByName(formProps.project);
         }
 
         // Create ToDo instance
@@ -112,10 +112,10 @@ const ToDoAppComponent = (function (contentElement) {
         // Project
         let project;
         if (formProps.project === 'create-new-project' && formProps['project-new-title'].length > 0) {
-            project = ToDoProjectNew.addProjectName(formProps['project-new-title']);
+            project = ToDoProject.addProjectName(formProps['project-new-title']);
             //_refreshSideNavComponent();
         } else {
-            project = ToDoProjectNew.getProjectByName(formProps.project);
+            project = ToDoProject.getProjectByName(formProps.project);
         }
         if (todo.getProject() !== project) {
             todo.setProject(project);

@@ -1,11 +1,11 @@
 import { Priority, PriorityLevel } from "./priorityLevel.js";
 import { Repeat, RepeatType } from "./repeatType.js";
 import { format, formatISO } from "date-fns";
-import { ToDoProjectItem, ToDoProjectNew } from "./todoProject.js";
+import ToDoProject, { ToDoProjectItem} from "./todoProject.js";
 import ToDoLocalStorage from "./todoLocalStorage.js";
 import {v4 as uuidv4} from 'uuid';
 
-export function ToDoItem(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProjectNew.getProjectByName('default'), id = uuidv4()) {
+export function ToDoItem(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProject.getProjectByName('default'), id = uuidv4()) {
     this._isComplete = false;
     this._title = title;
     this._description = description;
@@ -109,7 +109,7 @@ ToDoItem.prototype.toJSON = function() {
  * @param {ToDoProjectItem} project
  * @returns {Object}
  */
-export function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProjectNew.getProjectByName('default'), id = uuidv4()) {
+export function ToDo(title, description, dueDate, priorityLevel = Priority.getPriorityLevelByValue(0), repeatType = Repeat.getRepeatTypeByName('once'), project = ToDoProject.getProjectByName('default'), id = uuidv4()) {
     const todoItem = new ToDoItem(title, description, dueDate, priorityLevel, repeatType, project, id);
 
     // Save ToDo instance to localStorage

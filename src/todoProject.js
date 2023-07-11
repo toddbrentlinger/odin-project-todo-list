@@ -1,5 +1,4 @@
-import ToDo from "./todo.js";
-import { Filter, FilterType } from "./filterType.js";
+import { Filter } from "./filterType.js";
 import {v4 as uuidv4} from 'uuid';
 
 export function ToDoProjectItem(name, id = uuidv4()) {
@@ -18,7 +17,8 @@ export function ToDoProjectItem(name, id = uuidv4()) {
     };
 }
 
-export const ToDoProjectNew = (function() {
+/** ToDo projects module. */
+const ToDoProject = (function() {
     const _projects = [
         ToDoProjectItem('default'),
     ];
@@ -73,43 +73,4 @@ export const ToDoProjectNew = (function() {
     };
 }());
 
-/**
- * Factory function to create single instance of ToDoProject
- * @param  {...ToDo} todos 
- * @returns {Object}
- */
-export default function ToDoProject(name, ...todos) {
-    const _todos = new Set(todos);
-    
-    return {
-        getName: () => name,
-        setName: newName => {
-            name = newName;
-        },
-        getToDos: () => _todos,
-        addToDo: (...newToDos) => {
-            newToDos.forEach(newToDo => {
-                _todos.add(newToDo);
-            });
-        },
-        removeToDo: toDoToRemove => {
-            return _todos.delete(toDoToRemove);
-        },
-        toString: () => {
-            let str = `ToDoProject: ${name}\nToDos:\n`;
-            return str.concat(Array.from(_todos).map(todo => todo.toString()).join('\n'));
-        },
-        toJSON: () => {
-            return {
-                name,
-                todos: [...todos].map(todo => todo.toJSON()),
-            };
-        },
-        filterByType: filterTypeStr => {
-            const filterType = Filter.getFilterTypeByName(filterTypeStr);
-            if (filterType) {
-                return [..._todos].filter(filterType.callback);
-            }
-        },
-    };
-}
+export default ToDoProject;
